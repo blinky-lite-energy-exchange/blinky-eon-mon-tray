@@ -2296,7 +2296,7 @@
         "id": "68bf0b99.f33c84",
         "type": "mqtt in",
         "z": "968b5836.652898",
-        "name": "Subscribe DeviceA",
+        "name": "Subscribe DeviceB",
         "topic": "$(MQTTDEVICEB)",
         "qos": "0",
         "datatype": "auto",
