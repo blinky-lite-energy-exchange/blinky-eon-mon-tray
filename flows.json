@@ -349,14 +349,18 @@
         "type": "function",
         "z": "5f562f66.a301e",
         "name": "Save device config in Memory",
-        "func": "msg.payload.powerOn.value = 0;\nflow.set('device', msg.payload);\nflow.set('newSetting', 1);\nreturn null;",
-        "outputs": 0,
+        "func": "msg.payload.reset.value = 0;\nmsg.payload.powerOn.value = 0;\nflow.set('device', msg.payload);\nflow.set('newSetting', 1);\nreturn msg;",
+        "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "x": 830,
         "y": 40,
-        "wires": []
+        "wires": [
+            [
+                "89892a30.598e28"
+            ]
+        ]
     },
     {
         "id": "d5761f6c.c46e6",
@@ -754,7 +758,8 @@
         "y": 120,
         "wires": [
             [
-                "89892a30.598e28"
+                "89892a30.598e28",
+                "557e4f40.b904e"
             ]
         ]
     },
@@ -1345,7 +1350,7 @@
         "fieldType": "msg",
         "format": "javascript",
         "syntax": "mustache",
-        "template": "// Global Javascript\n        useWebSockets(true);\n        var mqttDevice = null;\n        var device = null;\n        var archiveRequestList = [];\n        var archiveList = [];\n        var pingInterval = 5000;\n        var lastPing = 0;\n\n        var restfulDevice = \n        {\n            deviceType  : '{{{payload.script.deviceType}}}',\n            name        : '{{{payload.script.name}}}',\n            project     : '{{{payload.script.project}}}'\n        };\n\n        var plotConfig = \n        {\n            trace1Title : 'Power',\n            trace1Color : '#557a95',\n            trace1GridColor : '#beceda',\n            trace2Title : 'Current',\n            trace2Color : '#f2a31f',\n            plotLength  : 600000,\n            width   : '',\n            height  :   '500',\n            htmlId  :   'historyStripChart'\n        };\n        var mqttDevice = null;\n        var device = null;\n        let historyStripChart = new StripChart(plotConfig);\n        var nsamplesChanged = false;\n        var nfilterChanged = false;\n        var avgRmsOffsetChanged = false;\n        var adcTomAChanged = false;\n        var loopDelayChanged = false;\n        \n        function onDocumentReady()\n        {\n            $('#nsamplesButtonId').hide();\n            $('#nfilterButtonId').hide();\n            $('#avgRmsOffsetButtonId').hide();\n            $('#adcTomAButtonId').hide();\n            $('#loopDelayButtonId').hide();\n\n            setRemoteApp(false);\n            if (remoteApp)\n            {\n                getCreds();\n                setInterval(function(){getCreds();}, 1000);\n            }\n            else\n            {\n                $('#userCardId').hide();\n            }\n            $('#archiveCardId').hide();\n            $('#loopDelayButtonId').hide();\n            setInterval(function()\n            {\n                var now = new Date().getTime();\n                if ((now - lastPing) > pingInterval)\n                {\n                    lastPing = now;\n                    var actionMsg = \n                        {\n                            topic   : restfulDevice.project + '/' +  restfulDevice.deviceType + '/' +  restfulDevice.name + '/ping',\n                            payload : true\n                        };\n                    sendActionMsg('ping', 'ping', actionMsg);\n               }\n            }, 1000);\n        }\n        function onWebSocketOpen()\n        {\n            if (remoteApp) getArchive(24);\n        }\n        function onWebSocketClose()\n        {\n            \n        }\n        function onWebSocketMessage(msg)\n        {\n           switch(msg.topic)\n            {\n                case 'readings':\n                    if ((msg.mqttDevice.name == restfulDevice.name) && (msg.mqttDevice.deviceType == restfulDevice.deviceType)  && (msg.mqttDevice.project == restfulDevice.project) )\n                    {\n                        lastPing = new Date().getTime();\n                        heartbeat();\n                        device = JSON.parse(pako.inflate(msg.payload, { to: 'string' }));\n                        mqttDevice = msg.mqttDevice;\n                        updateDmaReadings();\n                    }\n                    break;\n                case 'readDatabase':\n                    if (msg.userID == userID)\n                    {\n                        if ((msg.payload.device.deviceType == restfulDevice.deviceType) && (msg.payload.device.name == restfulDevice.name) )\n                            putArchiveValues(msg.payload);\n                    }\n                    break;\n                case 'renew':\n                    if (msg.userID == userID)\n                    {\n                        updateCookie(msg);\n                    }\n                    break;\n                case 'permissionError':\n                    if (msg.userID == userID)\n                    {\n                        acknowledgeDialog('Permission', 'Error', msg.payload);\n                    }\n                    break;\n                case 'loginExpired':\n                    if (msg.userID == userID)\n                    {\n                       location.reload();\n                    }\n                    break;\n                default:\n                    break;\n            }\n        }\n        function sendSetting()\n        {\n            var actionMsg = \n                {\n                    topic   : mqttDevice.project + '/' +  mqttDevice.deviceType + '/' +  mqttDevice.name + '/setting',\n                    payload : pako.deflate(JSON.stringify(device))\n                };\n            sendActionMsg('setting','setting',actionMsg);\n       }\n        function setScalarValue(settingValue, attrName)\n        {\n            var settingAttr = device[attrName];\n            if ( (settingAttr.alarm.limits.lolo <= settingValue) && (settingValue <= settingAttr.alarm.limits.hihi) )\n            {\n                settingAttr.value = settingValue;\n                sendSetting();\n            } \n            else\n            {\n                acknowledgeDialog('Acknowledge', 'Error', 'Entry outside range! (' + settingAttr.alarm.limits.lolo.toString() + '-' + settingAttr.alarm.limits.hihi.toString() + ' ' + settingAttr.unit);\n            }\n        }\n        function nsamplesChange()\n        {\n            nsamplesChanged = true;\n            $('#nsamplesButtonId').show();\n        }\n        function nfilterChange()\n        {\n            nfilterChanged = true;\n            $('#nfilterButtonId').show();\n        }\n        function avgRmsOffsetChange()\n        {\n            avgRmsOffsetChanged = true;\n            $('#avgRmsOffsetButtonId').show();\n        }\n        function adcTomAChange()\n        {\n            adcTomAChanged = true;\n            $('#adcTomAButtonId').show();\n        }\n        function loopDelayChange()\n        {\n            loopDelayChanged = true;\n            $('#loopDelayButtonId').show();\n        }\n        function nsamples()\n        {\n            $('#nsamplesButtonId').hide();\n            if (isNaN($('#nsamplesInputId').val()))\n            {\n                nsamplesChanged = false;\n                return;\n            }\n            setScalarValue(Number($('#nsamplesInputId').val()), 'nsamples');\n            nsamplesChanged = false;\n        }\n        function nfilter()\n        {\n            $('#nfilterButtonId').hide();\n            if (isNaN($('#nfilterInputId').val()))\n            {\n                nfilterChanged = false;\n                return;\n            }\n            setScalarValue(Number($('#nfilterInputId').val()), 'nfilter');\n            nfilterChanged = false;\n        }\n        function avgRmsOffset()\n        {\n            $('#avgRmsOffsetButtonId').hide();\n            if (isNaN($('#avgRmsOffsetInputId').val()))\n            {\n                avgRmsOffsetChanged = false;\n                return;\n            }\n            setScalarValue(Number($('#avgRmsOffsetInputId').val()), 'avgRmsOffset');\n            avgRmsOffsetChanged = false;\n        }\n        function adcTomA()\n        {\n            $('#adcTomAButtonId').hide();\n            if (isNaN($('#adcTomAInputId').val()))\n            {\n                adcTomAChanged = false;\n                return;\n            }\n            setScalarValue(Number($('#adcTomAInputId').val()), 'adcTomA');\n            adcTomAChanged = false;\n        }\n        function loopDelay()\n        {\n            $('#loopDelayButtonId').hide();\n            if (isNaN($('#loopDelayInputId').val()))\n            {\n                loopDelayChanged = false;\n                return;\n            }\n            setScalarValue(Number($('#loopDelayInputId').val()), 'loopDelay');\n            loopDelayChanged = false;\n        }\n",
+        "template": "// Global Javascript\n        useWebSockets(true);\n        var mqttDevice = null;\n        var device = null;\n        var archiveRequestList = [];\n        var archiveList = [];\n        var pingInterval = 5000;\n        var lastPing = 0;\n\n        var restfulDevice = \n        {\n            deviceType  : '{{{payload.script.deviceType}}}',\n            name        : '{{{payload.script.name}}}',\n            project     : '{{{payload.script.project}}}'\n        };\n\n        var plotConfig = \n        {\n            trace1Title : 'Power',\n            trace1Color : '#557a95',\n            trace1GridColor : '#beceda',\n            trace2Title : 'Current',\n            trace2Color : '#f2a31f',\n            plotLength  : 600000,\n            width   : '',\n            height  :   '500',\n            htmlId  :   'historyStripChart'\n        };\n        var mqttDevice = null;\n        var device = null;\n        let historyStripChart = new StripChart(plotConfig);\n        var nsamplesChanged = false;\n        var nfilterChanged = false;\n        var avgRmsOffsetChanged = false;\n        var adcTomAChanged = false;\n        var loopDelayChanged = false;\n        \n        function onDocumentReady()\n        {\n            $('#nsamplesButtonId').hide();\n            $('#nfilterButtonId').hide();\n            $('#avgRmsOffsetButtonId').hide();\n            $('#adcTomAButtonId').hide();\n            $('#loopDelayButtonId').hide();\n\n            setRemoteApp(false);\n            if (remoteApp)\n            {\n                getCreds();\n                setInterval(function(){getCreds();}, 1000);\n            }\n            else\n            {\n                $('#userCardId').hide();\n            }\n            $('#archiveCardId').hide();\n            $('#loopDelayButtonId').hide();\n            setInterval(function()\n            {\n                var now = new Date().getTime();\n                if ((now - lastPing) > pingInterval)\n                {\n                    lastPing = now;\n                    var actionMsg = \n                        {\n                            topic   : restfulDevice.project + '/' +  restfulDevice.deviceType + '/' +  restfulDevice.name + '/ping',\n                            payload : true\n                        };\n                    sendActionMsg('ping', 'ping', actionMsg);\n               }\n            }, 1000);\n        }\n        function onWebSocketOpen()\n        {\n            if (remoteApp) getArchive(24);\n        }\n        function onWebSocketClose()\n        {\n            \n        }\n        function onWebSocketMessage(msg)\n        {\n           switch(msg.topic)\n            {\n                case 'readings':\n                    if ((msg.mqttDevice.name == restfulDevice.name) && (msg.mqttDevice.deviceType == restfulDevice.deviceType)  && (msg.mqttDevice.project == restfulDevice.project) )\n                    {\n                        lastPing = new Date().getTime();\n                        heartbeat();\n                        device = JSON.parse(pako.inflate(msg.payload, { to: 'string' }));\n                        mqttDevice = msg.mqttDevice;\n                        updateDmaReadings();\n                    }\n                    break;\n                case 'readDatabase':\n                    if (msg.userID == userID)\n                    {\n                        if ((msg.payload.device.deviceType == restfulDevice.deviceType) && (msg.payload.device.name == restfulDevice.name) )\n                            putArchiveValues(msg.payload);\n                    }\n                    break;\n                case 'renew':\n                    if (msg.userID == userID)\n                    {\n                        updateCookie(msg);\n                    }\n                    break;\n                case 'permissionError':\n                    if (msg.userID == userID)\n                    {\n                        acknowledgeDialog('Permission', 'Error', msg.payload);\n                    }\n                    break;\n                case 'loginExpired':\n                    if (msg.userID == userID)\n                    {\n                       location.reload();\n                    }\n                    break;\n                default:\n                    break;\n            }\n        }\n        function sendSetting()\n        {\n            var actionMsg = \n                {\n                    topic   : mqttDevice.project + '/' +  mqttDevice.deviceType + '/' +  mqttDevice.name + '/setting',\n                    payload : pako.deflate(JSON.stringify(device))\n                };\n            sendActionMsg('setting','setting',actionMsg);\n        }\n        function setScalarValue(settingValue, attrName)\n        {\n            var settingAttr = device[attrName];\n            if ( (settingAttr.alarm.limits.lolo <= settingValue) && (settingValue <= settingAttr.alarm.limits.hihi) )\n            {\n                settingAttr.value = settingValue;\n                sendSetting();\n            } \n            else\n            {\n                acknowledgeDialog('Acknowledge', 'Error', 'Entry outside range! (' + settingAttr.alarm.limits.lolo.toString() + '-' + settingAttr.alarm.limits.hihi.toString() + ' ' + settingAttr.unit);\n            }\n        }\n        function reset(actionFlag)\n        {\n            var headerText = 'Warning';\n            var title = 'Resetting Tray';\n            var text = 'I hope you know what you are doing.';\n            var buttonTexts = ['Reset', 'Cancel'];\n            var buttonFunctions = \n            [\n                function()\n                {\n                    $( this ).dialog( \"close\" );\n                    setScalarValue(actionFlag, 'reset');\n                 }, \n                function()\n                {\n                    $( this ).dialog( \"close\" );\n                }\n            ];\n            if (actionFlag == 2)\n            {\n                title = 'Rebooting Tray';\n                buttonTexts[0] = 'Reboot';\n            }\n            optionDialog(headerText, title, text, buttonTexts, buttonFunctions);\n            \n        }\n        function nsamplesChange()\n        {\n            nsamplesChanged = true;\n            $('#nsamplesButtonId').show();\n        }\n        function nfilterChange()\n        {\n            nfilterChanged = true;\n            $('#nfilterButtonId').show();\n        }\n        function avgRmsOffsetChange()\n        {\n            avgRmsOffsetChanged = true;\n            $('#avgRmsOffsetButtonId').show();\n        }\n        function adcTomAChange()\n        {\n            adcTomAChanged = true;\n            $('#adcTomAButtonId').show();\n        }\n        function loopDelayChange()\n        {\n            loopDelayChanged = true;\n            $('#loopDelayButtonId').show();\n        }\n        function nsamples()\n        {\n            $('#nsamplesButtonId').hide();\n            if (isNaN($('#nsamplesInputId').val()))\n            {\n                nsamplesChanged = false;\n                return;\n            }\n            setScalarValue(Number($('#nsamplesInputId').val()), 'nsamples');\n            nsamplesChanged = false;\n        }\n        function nfilter()\n        {\n            $('#nfilterButtonId').hide();\n            if (isNaN($('#nfilterInputId').val()))\n            {\n                nfilterChanged = false;\n                return;\n            }\n            setScalarValue(Number($('#nfilterInputId').val()), 'nfilter');\n            nfilterChanged = false;\n        }\n        function avgRmsOffset()\n        {\n            $('#avgRmsOffsetButtonId').hide();\n            if (isNaN($('#avgRmsOffsetInputId').val()))\n            {\n                avgRmsOffsetChanged = false;\n                return;\n            }\n            setScalarValue(Number($('#avgRmsOffsetInputId').val()), 'avgRmsOffset');\n            avgRmsOffsetChanged = false;\n        }\n        function adcTomA()\n        {\n            $('#adcTomAButtonId').hide();\n            if (isNaN($('#adcTomAInputId').val()))\n            {\n                adcTomAChanged = false;\n                return;\n            }\n            setScalarValue(Number($('#adcTomAInputId').val()), 'adcTomA');\n            adcTomAChanged = false;\n        }\n        function loopDelay()\n        {\n            $('#loopDelayButtonId').hide();\n            if (isNaN($('#loopDelayInputId').val()))\n            {\n                loopDelayChanged = false;\n                return;\n            }\n            setScalarValue(Number($('#loopDelayInputId').val()), 'loopDelay');\n            loopDelayChanged = false;\n        }\n",
         "output": "str",
         "x": 630,
         "y": 260,
@@ -1421,10 +1426,10 @@
         "fieldType": "msg",
         "format": "html",
         "syntax": "mustache",
-        "template": "    <div width=\"100%\">\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12' align='center'>\n{{{payload.html.dashboard}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12' align='center'>\n{{{payload.html.history}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12' align='center'>\n{{{payload.html.archive}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12'>\n{{{payload.html.user}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12'>\n{{{payload.html.wifimon}}}\n            </div>\n        </div>\n    </div>",
+        "template": "    <div width=\"100%\">\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12' align='center'>\n{{{payload.html.dashboard}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12' align='center'>\n{{{payload.html.history}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12' align='center'>\n{{{payload.html.archive}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12'>\n{{{payload.html.user}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12'>\n{{{payload.html.wifimon}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12'>\n{{{payload.html.reset}}}\n            </div>\n        </div>\n    </div>",
         "output": "str",
         "x": 930,
-        "y": 460,
+        "y": 500,
         "wires": [
             [
                 "c6d4dfc7.827cb"
@@ -1446,7 +1451,7 @@
         "y": 420,
         "wires": [
             [
-                "450b0136.7ccbd"
+                "c273ba2f.eae8a8"
             ]
         ]
     },
@@ -2210,14 +2215,18 @@
         "type": "function",
         "z": "968b5836.652898",
         "name": "Save device config in Memory",
-        "func": "msg.payload.powerOn.value = 0;\nflow.set('device', msg.payload);\nflow.set('newSetting', 1);\nreturn null;",
-        "outputs": 0,
+        "func": "msg.payload.reset.value = 0;\nmsg.payload.powerOn.value = 0;\nflow.set('device', msg.payload);\nflow.set('newSetting', 1);\nreturn msg;",
+        "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "x": 830,
         "y": 40,
-        "wires": []
+        "wires": [
+            [
+                "d9684bd0.d70368"
+            ]
+        ]
     },
     {
         "id": "76ea7f0.c485b8",
@@ -2505,7 +2514,8 @@
         "y": 120,
         "wires": [
             [
-                "d9684bd0.d70368"
+                "d9684bd0.d70368",
+                "108404da.21461b"
             ]
         ]
     },
@@ -2652,6 +2662,213 @@
         "wires": [
             [
                 "9c7ca1c3.7d207"
+            ]
+        ]
+    },
+    {
+        "id": "557e4f40.b904e",
+        "type": "delay",
+        "z": "5f562f66.a301e",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 940,
+        "y": 180,
+        "wires": [
+            [
+                "9e290594.69c548"
+            ]
+        ]
+    },
+    {
+        "id": "9e290594.69c548",
+        "type": "switch",
+        "z": "5f562f66.a301e",
+        "name": "Reset Tray",
+        "property": "payload.reset.value",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 950,
+        "y": 220,
+        "wires": [
+            [
+                "c0939e4a.6386f"
+            ],
+            [
+                "236a8168.66f7fe"
+            ]
+        ]
+    },
+    {
+        "id": "c0939e4a.6386f",
+        "type": "exec",
+        "z": "5f562f66.a301e",
+        "command": "pm2 restart red",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "Restart",
+        "x": 1140,
+        "y": 200,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "236a8168.66f7fe",
+        "type": "exec",
+        "z": "5f562f66.a301e",
+        "command": "sudo reboot",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "Reboot",
+        "x": 1140,
+        "y": 260,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "108404da.21461b",
+        "type": "delay",
+        "z": "968b5836.652898",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 940,
+        "y": 180,
+        "wires": [
+            [
+                "65d2b3a4.c3b78c"
+            ]
+        ]
+    },
+    {
+        "id": "65d2b3a4.c3b78c",
+        "type": "switch",
+        "z": "968b5836.652898",
+        "name": "Reset Tray",
+        "property": "payload.reset.value",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 950,
+        "y": 220,
+        "wires": [
+            [
+                "5603c847.548748"
+            ],
+            [
+                "18095c58.987334"
+            ]
+        ]
+    },
+    {
+        "id": "5603c847.548748",
+        "type": "exec",
+        "z": "968b5836.652898",
+        "command": "pm2 restart red",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "Restart",
+        "x": 1140,
+        "y": 200,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "18095c58.987334",
+        "type": "exec",
+        "z": "968b5836.652898",
+        "command": "sudo reboot",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "Reboot",
+        "x": 1140,
+        "y": 260,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c273ba2f.eae8a8",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "html.reset",
+        "field": "payload.html.reset",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "                <div class='card' id='reset'>\n                    <div class='card-body' align=\"center\">\n                         <table width=\"100%\">\n                            <tr>\n                                <td width=\"40%\">\n                                    <button class='btn btn-block card-button big-text' onclick=\"reset(1)\" >Reset</button>\n                                </td>\n                                <td width=\"10%\"></td>\n                                <td width=\"40%\">\n                                    <button class='btn btn-block card-button big-text' onclick=\"reset(2)\" >Reboot</button>\n                                </td>\n                            </tr>\n                        </table>\n                    </div>\n                </div>\n",
+        "output": "str",
+        "x": 940,
+        "y": 460,
+        "wires": [
+            [
+                "450b0136.7ccbd"
             ]
         ]
     }
