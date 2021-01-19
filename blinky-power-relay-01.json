@@ -27,7 +27,7 @@
   "milliAmps": {
     "action": "reading",
     "type": "scalar",
-    "value": 0,
+    "value": 1.02,
     "unit": "mA",
     "alarm": {
       "value": 0,
@@ -47,7 +47,7 @@
   "power": {
     "action": "reading",
     "type": "scalar",
-    "value": 0,
+    "value": 0.24,
     "unit": "Watts",
     "alarm": {
       "value": 0,
@@ -67,7 +67,7 @@
   "adcSampleRate": {
     "action": "reading",
     "type": "scalar",
-    "value": 14.26,
+    "value": 14.3,
     "unit": "kHz",
     "alarm": {
       "value": 0,
@@ -87,7 +87,7 @@
   "linkQuality": {
     "action": "reading",
     "type": "scalar",
-    "value": 53,
+    "value": 54,
     "unit": "/70",
     "alarm": {
       "value": 0,
@@ -107,7 +107,7 @@
   "signalLevel": {
     "action": "reading",
     "type": "scalar",
-    "value": -57,
+    "value": -56,
     "unit": "dBm",
     "alarm": {
       "value": 0,
