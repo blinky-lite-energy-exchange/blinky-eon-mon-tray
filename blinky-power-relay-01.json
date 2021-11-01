@@ -7,10 +7,10 @@
   "avgRms": {
     "action": "reading",
     "type": "scalar",
-    "value": 0.01,
+    "value": 3.42,
     "unit": "mA",
     "alarm": {
-      "value": 1,
+      "value": 0,
       "limits": {
         "lolo": 0,
         "low": 1,
@@ -27,7 +27,7 @@
   "milliAmps": {
     "action": "reading",
     "type": "scalar",
-    "value": 1.75,
+    "value": 104.38,
     "unit": "mA",
     "alarm": {
       "value": 0,
@@ -47,7 +47,7 @@
   "power": {
     "action": "reading",
     "type": "scalar",
-    "value": 0.42,
+    "value": 25.05,
     "unit": "Watts",
     "alarm": {
       "value": 0,
@@ -67,7 +67,7 @@
   "adcSampleRate": {
     "action": "reading",
     "type": "scalar",
-    "value": 14.27,
+    "value": 14.33,
     "unit": "kHz",
     "alarm": {
       "value": 0,
@@ -87,7 +87,7 @@
   "linkQuality": {
     "action": "reading",
     "type": "scalar",
-    "value": 55,
+    "value": 70,
     "unit": "/70",
     "alarm": {
       "value": 0,
@@ -107,7 +107,7 @@
   "signalLevel": {
     "action": "reading",
     "type": "scalar",
-    "value": -55,
+    "value": -34,
     "unit": "dBm",
     "alarm": {
       "value": 0,

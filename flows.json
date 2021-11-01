@@ -305,11 +305,12 @@
         "type": "function",
         "z": "5f562f66.a301e",
         "name": "CreateSettings",
-        "func": "var device = flow.get('device');\n//node.warn('newSetting = ' + flow.get('newSetting').toString())\n\nvar bufsize = 28;\nvar buffer = new ArrayBuffer(bufsize);\nvar settingsView = new DataView(buffer);\nsettingsView.setInt32(0, flow.get('newSetting'), true);\nsettingsView.setInt32(4, device.powerOn.value, true);\nsettingsView.setFloat32(8, device.nsamples.value, true);\nsettingsView.setFloat32(12, device.avgRmsOffset.value, true);\nsettingsView.setFloat32(16, device.adcTomA.value, true);\nsettingsView.setInt32(20, device.loopDelay.value, true);\nsettingsView.setFloat32(24, device.nfilter.value, true);\n\nreturn {topic:'settings',payload:Buffer.from(buffer)};\n",
+        "func": "var device = flow.get('device');\n//node.warn('newSetting = ' + flow.get('newSetting').toString())\n//node.warn(device);\nvar bufsize = 28;\nvar buffer = new ArrayBuffer(bufsize);\nvar settingsView = new DataView(buffer);\nsettingsView.setInt32(0, flow.get('newSetting'), true);\nsettingsView.setInt32(4, device.powerOn.value, true);\nsettingsView.setFloat32(8, device.nsamples.value, true);\nsettingsView.setFloat32(12, device.avgRmsOffset.value, true);\nsettingsView.setFloat32(16, device.adcTomA.value, true);\nsettingsView.setInt32(20, device.loopDelay.value, true);\nsettingsView.setFloat32(24, device.nfilter.value, true);\n\nreturn {topic:'settings',payload:Buffer.from(buffer)};\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 540,
         "y": 460,
         "wires": [
@@ -328,6 +329,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
+        "libs": [],
         "x": 830,
         "y": 40,
         "wires": [
