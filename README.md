@@ -1,11 +1,11 @@
-# blinky-stepper tray
+# blinky-power-relay tray
 ## need to add .env file with the following
-PROJECT=blinky-lite-v2  
-MQTTDEVICEA=blinky-lite-v2/blinky-stepper/01/+  
-MQTTDEVICEB=blinky-lite-v2/blinky-stepper/02/+  
-MQTTCLIENTID=blinky-basic-stepper-01  
+PROJECT=blinky-lite-v3  
+MQTTDEVICEA=blinky-lite-v3/blinky-power-relay/02/setting/#  
+MQTTCLIENTID=blinky-power-relay-tray-02  
 MQTTSERVERIP=xxxx  
 MQTTUSERNAME=yyyy  
 MQTTPASSWORD=zzzz  
-NODEREDCONFIGSECRET=qqqq  
+SERIALPORT=/dev/rfcomm0  
+NODEREDCONFIGSECRET=aaaa  
 
