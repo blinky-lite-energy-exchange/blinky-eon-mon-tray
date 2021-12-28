@@ -9,7 +9,7 @@
   "linkQuality": {
     "action": "reading",
     "type": "scalar",
-    "value": 68,
+    "value": 60,
     "unit": "/70",
     "alarm": {
       "value": 0,
@@ -29,7 +29,7 @@
   "signalLevel": {
     "action": "reading",
     "type": "scalar",
-    "value": -42,
+    "value": -50,
     "unit": "dBm",
     "alarm": {
       "value": 0,
@@ -49,7 +49,7 @@
   "power": {
     "action": "reading",
     "type": "scalar",
-    "value": 1.1,
+    "value": 5.7,
     "unit": "Watts",
     "alarm": {
       "value": 0,
@@ -69,7 +69,7 @@
   "current": {
     "action": "reading",
     "type": "scalar",
-    "value": 0.005,
+    "value": 0.024,
     "unit": "Amps",
     "alarm": {
       "value": 0,
@@ -89,7 +89,7 @@
   "adcSampleRate": {
     "action": "reading",
     "type": "scalar",
-    "value": 6.705,
+    "value": 7.338,
     "unit": "kHz",
     "alarm": {
       "value": 0,
@@ -158,6 +158,211 @@
         "low": 2,
         "high": 80,
         "hihi": 90
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "opState": {
+    "action": "setting",
+    "type": "scalar",
+    "value": 2,
+    "unit": "unit",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": -1,
+        "low": -1,
+        "high": 3,
+        "hihi": 3
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "timezone": {
+    "action": "reading",
+    "type": "text",
+    "value": "Europe/Stockholm"
+  },
+  "startScheduleTime": {
+    "action": "setting",
+    "type": "scalar",
+    "value": 1044,
+    "unit": "min",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": -1,
+        "low": -1,
+        "high": 1440,
+        "hihi": 1440
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "stopScheduleTime": {
+    "action": "setting",
+    "type": "scalar",
+    "value": 1046,
+    "unit": "min",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": -1,
+        "low": -1,
+        "high": 1440,
+        "hihi": 1440
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "startCostSearchTime": {
+    "action": "setting",
+    "type": "scalar",
+    "value": 1260,
+    "unit": "min",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": -1,
+        "low": -1,
+        "high": 1440,
+        "hihi": 1440
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "stopCostSearchTime": {
+    "action": "setting",
+    "type": "scalar",
+    "value": 360,
+    "unit": "min",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": -1,
+        "low": -1,
+        "high": 1440,
+        "hihi": 1440
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "costDuration": {
+    "action": "setting",
+    "type": "scalar",
+    "value": 180,
+    "unit": "min",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": -1,
+        "low": -1,
+        "high": 1440,
+        "hihi": 1440
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "startCostTime": {
+    "action": "reading",
+    "type": "scalar",
+    "value": 1640736000000,
+    "unit": "usec",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": -1,
+        "low": -1,
+        "high": 2000000000000,
+        "hihi": 2000000000000
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "stopCostTime": {
+    "action": "reading",
+    "type": "scalar",
+    "value": 1640746800000,
+    "unit": "usec",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": -1,
+        "low": -1,
+        "high": 2000000000000,
+        "hihi": 2000000000000
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "avgDurationCost": {
+    "action": "reading",
+    "type": "scalar",
+    "value": 0.936,
+    "unit": "SEK/kW-hr",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": 0,
+        "low": 0,
+        "high": 2,
+        "hihi": 3
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "nextDayCostAvailable": {
+    "action": "reading",
+    "type": "scalar",
+    "value": 1,
+    "unit": "unit",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": -1,
+        "low": -1,
+        "high": 2,
+        "hihi": 2
       },
       "notify": {
         "name": "",

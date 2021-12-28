@@ -431,7 +431,7 @@
         "fieldType": "msg",
         "format": "css",
         "syntax": "mustache",
-        "template": "        :root \n        {\n          --color1: #415c71;\n          --color2: #547792;\n          --color3: #9eb5c7;\n          --color4: #c6c2bb;\n          --color5: #fdc300;\n          --big-text-size :300%;\n          --bold-text :900;\n          --vert-pad : 25px;\n          --horz-pad : 25px;\n        }\n        body \n        {\n          background-color: white !important;\n          padding-left:25px;\n          padding-right:25px;\n        }\n        \n        img \n        {\n          object-fit: contain;\n        }\n        a\n        {\n            color: white;\n        }\n        a:visited \n        { \n            color: var(--white);\n        }\n        a:hover \n        { \n            color: var(--color5);\n        }\n\n        .jumbotron \n        {\n          background-color: var(--color2) !important;\n          color: white;\n          padding-top:25px;\n          padding-bottom:25px;\n        }\n        .jumbotron-title\n        {\n          color:var(--color5);\n        }\n        .jumbotron-button\n        {\n          color: white;\n          background-color: var(--color1);\n       }\n        .card\n        {\n          background-color: var(--color2) !important;\n          text-align: center;\n        }\n        .card-body\n        {\n          background-color: var(--color3);;\n        }\n        .card-button\n        {\n          color: var(--color5) !important;\n          background-color: var(--color1) !important;\n          font-weight: bold;\n        }\n        .card-title\n        {\n          color: var(--color5);\n          font-weight: var(--bold-text);\n          font-size: var(--big-text-size);\n         }\n        .card-text\n        {\n          color: white;\n          text-align: left;\n          font-size: var(--big-text-size);\n        }\n        .danger-card\n        {\n          background-color: yellow !important;\n          text-align: center;\n        }\n        .danger-card-body\n        {\n          background-color: yellow;\n        }\n        .danger-card-button\n        {\n          color: yellow !important;\n          background-color: red !important;\n          font-weight: bold;\n        }\n        .danger-card-title\n        {\n          color: red;\n          font-weight: var(--bold-text);\n          font-size: var(--big-text-size);\n         }\n        .danger-card-text\n        {\n          color: white;\n          text-align: left;\n          font-size: var(--big-text-size);\n        }\n        .tableHeading\n        {\n          color:var(--container-title-color);\n        }\n        .tableText\n        {\n          color:var(--container-text-color);\n          font-size: var(--big-text-size);\n        }\n       .vert-pad\n        {\n            padding-top:var(--vert-pad);;\n            padding-bottom:var(--vert-pad);;\n        }\n        .horz-pad\n        {\n            padding-left:var(--horz-pad);;\n            padding-right:var(--horz-pad);;\n        }\n        .big-text\n        {\n            font-size: var(--big-text-size);\n        }\n        .bold-text\n        {\n            font-weight: var(--bold-text);\n        }\n       .ui-dialog-titlebar-close \n        {\n            visibility: hidden;\n        }\n        input.inputLarger \n        { \n            transform: scale(3); \n            margin: 1px;\n        }\n        .googleSlide4by3-container \n        {\n            position: relative;\n            overflow: hidden;\n            padding-top: 75.0%;\n        }\n        .googleSlide4by3-iframe {\n            position: absolute;\n            top: 0;\n            left: 0;\n            width: 100%;\n            height: 100%;\n            border: 0;\n        }        \n        .custom-select\n        {\n            color: black;\n            background-color: white;\n            height:80px;\n            line-height:70px;\n        }\n",
+        "template": "        :root \n        {\n          --color1: #415c71;\n          --color2: #547792;\n          --color3: #9eb5c7;\n          --color4: #c6c2bb;\n          --color5: #fdc300;\n          --big-text-size :300%;\n          --bold-text :900;\n          --vert-pad : 25px;\n          --horz-pad : 25px;\n        }\n        body \n        {\n          background-color: white !important;\n          padding-left:25px;\n          padding-right:25px;\n        }\n        \n        img \n        {\n          object-fit: contain;\n        }\n        a\n        {\n            color: white;\n        }\n        a:visited \n        { \n            color: var(--white);\n        }\n        a:hover \n        { \n            color: var(--color5);\n        }\n\n        .jumbotron \n        {\n          background-color: var(--color2) !important;\n          color: white;\n          padding-top:25px;\n          padding-bottom:25px;\n        }\n        .jumbotron-title\n        {\n          color:var(--color5);\n        }\n        .jumbotron-button\n        {\n          color: white;\n          background-color: var(--color1);\n       }\n        .card\n        {\n          background-color: var(--color2) !important;\n          text-align: center;\n        }\n        .card-body\n        {\n          background-color: var(--color3);;\n        }\n        .card-button\n        {\n          color: var(--color5) !important;\n          background-color: var(--color1) !important;\n          font-weight: bold;\n        }\n        .card-title\n        {\n          color: var(--color5);\n          font-weight: var(--bold-text);\n          font-size: var(--big-text-size);\n         }\n        .card-text\n        {\n          color: white;\n          text-align: left;\n          font-size: var(--big-text-size);\n        }\n        .tableHeading\n        {\n          color:var(--container-title-color);\n        }\n        .tableText\n        {\n          color:var(--container-text-color);\n          font-size: var(--big-text-size);\n        }\n       .vert-pad\n        {\n            padding-top:var(--vert-pad);;\n            padding-bottom:var(--vert-pad);;\n        }\n        .horz-pad\n        {\n            padding-left:var(--horz-pad);;\n            padding-right:var(--horz-pad);;\n        }\n        .big-text\n        {\n            font-size: var(--big-text-size);\n        }\n        .bold-text\n        {\n            font-weight: var(--bold-text);\n        }\n       .ui-dialog-titlebar-close \n        {\n            visibility: hidden;\n        }\n        input.inputLarger \n        { \n            transform: scale(3); \n            margin: 1px;\n        }\n        .googleSlide4by3-container \n        {\n            position: relative;\n            overflow: hidden;\n            padding-top: 75.0%;\n        }\n        .googleSlide4by3-iframe {\n            position: absolute;\n            top: 0;\n            left: 0;\n            width: 100%;\n            height: 100%;\n            border: 0;\n        }        \n        .custom-select\n        {\n            color: black;\n            background-color: white;\n            height:80px;\n            line-height:70px;\n        }\n",
         "output": "str",
         "x": 190,
         "y": 80,
@@ -487,7 +487,7 @@
         "y": 60,
         "wires": [
             [
-                "04fec5b44db8b4da"
+                "3779e6db85af1353"
             ]
         ]
     },
@@ -778,7 +778,7 @@
         "type": "function",
         "z": "ce79ef46f01ee91a",
         "name": "Create Readings",
-        "func": "var device = flow.get('device');\nvar restartModbusMsg = null;\nif (device.settingInProgress < 0)\n{\n    device.settingInProgress = 0;\n    restartModbusMsg = {topic:'restartModbus', payload:true};\n    node.warn('Restart Modbus complete');\n}\nif (device.archiveNow > 0) return [null,null,null];\nvar initCube                        = msg.payload.data[0];\n\ndevice.power.value                  = Math.round(48000 * msg.payload.data[2] / msg.payload.data[1]) / 10;\ndevice.current.value                = Math.round(20000.0 * msg.payload.data[2] / msg.payload.data[1]) / 1000;\ndevice.adcSampleRate.value          = msg.payload.data[3] / 1000;\ndevice.nsamples.value               = msg.payload.data[4];\ndevice.nfilter.value                = msg.payload.data[5];\ndevice.powerOn.value                = msg.payload.data[6];\n//node.warn(msg.payload.data[1].toString() + ' ' + msg.payload.data[2].toString());\nvar initCubeMsg = null;\nif (initCube == 1)\n{\n    initCubeMsg = {topic:\"initCube\",payload:true};\n    device.settingInProgress = 1;\n}\nreturn  [{topic:'newSettingDone', payload:true},initCubeMsg, restartModbusMsg];\n",
+        "func": "var device = flow.get('device');\nvar restartModbusMsg = null;\nif (device.settingInProgress < 0)\n{\n    device.settingInProgress = 0;\n    restartModbusMsg = {topic:'restartModbus', payload:true};\n    node.warn('Restart Modbus complete');\n}\nif (device.archiveNow > 0) return [null,null,null];\nvar initCube                        = msg.payload.data[0];\n\ndevice.power.value                  = Math.round(48000 * msg.payload.data[2] / msg.payload.data[1]) / 10;\ndevice.current.value                = Math.round(20000.0 * msg.payload.data[2] / msg.payload.data[1]) / 1000;\ndevice.adcSampleRate.value          = msg.payload.data[3] / 1000;\ndevice.nsamples.value               = msg.payload.data[4];\ndevice.nfilter.value                = msg.payload.data[5];\ndevice.powerOn.value                = msg.payload.data[6];\n\nvar now = new Date();\nif (device.powerOn.value == 0)\n{\n    var espotPrice = flow.get('espotPrice').futurePrice.value;\n    device.nextDayCostAvailable.value = 0;\n    if (espotPrice[0].length >= 23) device.nextDayCostAvailable.value = 1;\n    var lastMidnightDate = new Date(now.getTime());\n    lastMidnightDate.setHours(0)\n    lastMidnightDate.setMinutes(0);\n    lastMidnightDate.setSeconds(0);\n    lastMidnightDate.setMilliseconds(0);\n    var comingMidnightDate = new Date(lastMidnightDate.getTime());\n    comingMidnightDate.setHours(24);\n    \n    var startSearchDate = new Date(comingMidnightDate.getTime());\n    startSearchDate.setMinutes(device.startCostSearchTime.value);\n    if (device.startCostSearchTime.value > device.stopCostSearchTime.value)\n    {\n        startSearchDate = new Date(lastMidnightDate.getTime());\n        startSearchDate.setMinutes(device.startCostSearchTime.value);\n    }\n\n    var stopSearchDate = new Date(comingMidnightDate.getTime());\n    stopSearchDate.setMinutes(device.stopCostSearchTime.value);\n    \n    var searchDuration = Math.round((stopSearchDate.getTime() - startSearchDate.getTime()) / 60000);\n    if (device.costDuration.value > searchDuration) device.costDuration.value = searchDuration;\n    if (now.getTime() < startSearchDate.getTime())\n    {\n        if (stopSearchDate.getTime() < (espotPrice[0][espotPrice[0].length - 1] + 3540000) )\n        {\n            var hourIndexStart = 0;\n            while ((startSearchDate.getTime() > espotPrice[0][hourIndexStart]) && (hourIndexStart < espotPrice[0].length) )\n            {\n                hourIndexStart = hourIndexStart + 1\n            }\n            hourIndexStart = hourIndexStart - 1;\n            var numDurationHrs = Math.ceil(device.costDuration.value / 60);\n            var hourIndexStop = hourIndexStart + numDurationHrs - 1;\n            var minCostAvg = 10000000;\n            var minCostStartIndex = hourIndexStart;\n\n            while (espotPrice[0][hourIndexStop + 1] < stopSearchDate.getTime())\n            {\n                var costAvg = 0;\n                for (var ic = hourIndexStart; ic <= hourIndexStop; ++ ic) costAvg = costAvg + espotPrice[1][ic];\n                costAvg = costAvg / numDurationHrs;\n                if (costAvg < minCostAvg)\n                {\n                    minCostAvg = costAvg;\n                    minCostStartIndex = hourIndexStart;\n                }\n                hourIndexStart = hourIndexStart + 1;\n                hourIndexStop = hourIndexStart + numDurationHrs - 1;\n            }\n            var startCostTime = espotPrice[0][minCostStartIndex];\n            var stopCostTime = startCostTime + device.costDuration.value * 60 * 1000;\n            var avgCost = Math.round(1000 * minCostAvg) / 1000;\n            device.startCostTime.value = startCostTime;\n            device.stopCostTime.value = stopCostTime;\n            device.avgDurationCost.value = avgCost; \n            \n        }\n    }\n}\n\nvar initCubeMsg = null;\nif (initCube == 1)\n{\n    initCubeMsg = {topic:\"initCube\",payload:true};\n    device.settingInProgress = 1;\n}\nreturn  [{topic:'newSettingDone', payload:true},initCubeMsg, restartModbusMsg];\n",
         "outputs": 3,
         "noerr": 0,
         "initialize": "",
@@ -826,7 +826,7 @@
                 "vt": "str"
             }
         ],
-        "repeat": "10",
+        "repeat": "2",
         "crontab": "",
         "once": true,
         "onceDelay": "15",
@@ -868,7 +868,7 @@
         "type": "function",
         "z": "ce79ef46f01ee91a",
         "name": "Create Setting",
-        "func": "var device = flow.get('device');\nvar modbusSettingMsg = \n{\n    topic : msg.topic, \n    payload : { value: msg.payload.value, 'fc': 0x6, 'unitid': 1, 'address': -1 , 'quantity': 1 } \n}\nvar modbusMessage = false;\nswitch(msg.payload.attr)\n{\n    case 'nsamples':\n        modbusSettingMsg.payload.address = 4;\n        modbusMessage = true;\n        break;\n    case 'nfilter':\n        modbusSettingMsg.payload.address = 5;\n        modbusMessage = true;\n        break;\n    case 'powerOn':\n        modbusSettingMsg.payload.address = 6;\n        modbusMessage = true;\n        break;\n    case 'nonModbusSetting':\n        device.nonModbusSetting.value  = msg.payload.value;\n        modbusMessage = false;\n        break;\n    default:\n        break;\n}\nvar msgArray = [null,null,null];\nif (modbusMessage)\n{\n    device.settingInProgress = 1;\n    var settingInProgressMsg = {topic:'settingInProgress', payload:true};\n    msgArray = [modbusSettingMsg, settingInProgressMsg, null];\n    \n}\nelse\n{\n    device.settingInProgress = 0;\n    msgArray = [null,null,{topic:'settingDone', payload:true}];\n}\nreturn msgArray;",
+        "func": "var device = flow.get('device');\nvar modbusSettingMsg = \n{\n    topic : msg.topic, \n    payload : { value: msg.payload.value, 'fc': 0x6, 'unitid': 1, 'address': -1 , 'quantity': 1 } \n}\nvar modbusMessage = false;\nswitch(msg.payload.attr)\n{\n    case 'nsamples':\n        modbusSettingMsg.payload.address = 4;\n        modbusMessage = true;\n        break;\n    case 'nfilter':\n        modbusSettingMsg.payload.address = 5;\n        modbusMessage = true;\n        break;\n    case 'powerOn':\n        modbusSettingMsg.payload.address = 6;\n        modbusMessage = true;\n        break;\n    case 'opState':\n        device.opState.value  = msg.payload.value;\n        modbusMessage = false;\n        break;\n    case 'startScheduleTime':\n        device.startScheduleTime.value  = msg.payload.value;\n        modbusMessage = false;\n        break;\n    case 'stopScheduleTime':\n        device.stopScheduleTime.value  = msg.payload.value;\n        modbusMessage = false;\n        break;\n    case 'startCostSearchTime':\n        device.startCostSearchTime.value  = msg.payload.value;\n        modbusMessage = false;\n        break;\n    case 'stopCostSearchTime':\n        device.stopCostSearchTime.value  = msg.payload.value;\n        modbusMessage = false;\n        break;\n    case 'costDuration':\n        device.costDuration.value  = msg.payload.value;\n        modbusMessage = false;\n        break;\n    default:\n        break;\n}\nvar msgArray = [null,null,null];\nif (modbusMessage)\n{\n    device.settingInProgress = 1;\n    var settingInProgressMsg = {topic:'settingInProgress', payload:true};\n    msgArray = [modbusSettingMsg, settingInProgressMsg, null];\n    \n}\nelse\n{\n    device.settingInProgress = 0;\n    msgArray = [null,null,{topic:'settingDone', payload:true}];\n}\nreturn msgArray;",
         "outputs": 3,
         "noerr": 0,
         "initialize": "",
@@ -969,7 +969,8 @@
         "z": "ce79ef46f01ee91a",
         "name": "Modbus setting in",
         "links": [
-            "3dc8a08d6a891e59"
+            "3dc8a08d6a891e59",
+            "8e4c017e68b2e16b"
         ],
         "x": 55,
         "y": 340,
@@ -1212,7 +1213,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1060,
+        "x": 1200,
         "y": 60,
         "wires": [
             [
@@ -1231,7 +1232,7 @@
         "arraySpltType": "len",
         "stream": false,
         "addname": "",
-        "x": 1190,
+        "x": 1330,
         "y": 60,
         "wires": [
             [
@@ -1256,7 +1257,7 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 1340,
+        "x": 1480,
         "y": 60,
         "wires": [
             [
@@ -1274,7 +1275,7 @@
         "server": "9bf2bda7e005d087",
         "emptyMsgOnFail": false,
         "keepMsgProperties": false,
-        "x": 1510,
+        "x": 1650,
         "y": 60,
         "wires": [
             [],
@@ -1835,7 +1836,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1700,
+        "x": 1840,
         "y": 60,
         "wires": [
             []
@@ -1869,7 +1870,7 @@
             "647f248407479387"
         ],
         "uncaught": false,
-        "x": 1550,
+        "x": 1690,
         "y": 120,
         "wires": [
             [
@@ -1888,7 +1889,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1720,
+        "x": 1860,
         "y": 120,
         "wires": []
     },
@@ -1944,6 +1945,360 @@
         "wires": []
     },
     {
+        "id": "3779e6db85af1353",
+        "type": "delay",
+        "z": "ce79ef46f01ee91a",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "20",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1060,
+        "y": 60,
+        "wires": [
+            [
+                "04fec5b44db8b4da"
+            ]
+        ]
+    },
+    {
+        "id": "226b913bc77a9292",
+        "type": "inject",
+        "z": "ce79ef46f01ee91a",
+        "name": "Init + 4 sec",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "4",
+        "topic": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 1140,
+        "wires": [
+            [
+                "d7a74c6aa1a14e87"
+            ]
+        ]
+    },
+    {
+        "id": "d7a74c6aa1a14e87",
+        "type": "exec",
+        "z": "ce79ef46f01ee91a",
+        "command": "cat /etc/timezone",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "get timezone",
+        "x": 290,
+        "y": 1140,
+        "wires": [
+            [
+                "6aa621b3a8db62c4"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6aa621b3a8db62c4",
+        "type": "function",
+        "z": "ce79ef46f01ee91a",
+        "name": "Save Timezone",
+        "func": "flow.get('device').timezone.value = msg.payload.split('\\n')[0];\nreturn msg;",
+        "outputs": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "83f6e075.50977",
+        "type": "inject",
+        "z": "ce79ef46f01ee91a",
+        "name": "Every hour",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "0 0-23 * * *",
+        "once": false,
+        "onceDelay": "10",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 1300,
+        "wires": [
+            [
+                "b5a41827.135818"
+            ]
+        ]
+    },
+    {
+        "id": "b5a41827.135818",
+        "type": "delay",
+        "z": "ce79ef46f01ee91a",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "4",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 1300,
+        "wires": [
+            [
+                "bb6ef20619e92fb7"
+            ]
+        ]
+    },
+    {
+        "id": "39d662de.59d5ae",
+        "type": "inject",
+        "z": "ce79ef46f01ee91a",
+        "name": "Init+20sec",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "topic": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 1240,
+        "wires": [
+            [
+                "bb6ef20619e92fb7"
+            ]
+        ]
+    },
+    {
+        "id": "24cbd4a6.71fc9c",
+        "type": "json",
+        "z": "ce79ef46f01ee91a",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 310,
+        "y": 1400,
+        "wires": [
+            [
+                "52d37fdf.e223a"
+            ]
+        ]
+    },
+    {
+        "id": "52d37fdf.e223a",
+        "type": "function",
+        "z": "ce79ef46f01ee91a",
+        "name": "Save espotPrice",
+        "func": "flow.set('espotPrice',msg.payload)\nreturn msg;",
+        "outputs": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "bb6ef20619e92fb7",
+        "type": "mqtt out",
+        "z": "ce79ef46f01ee91a",
+        "name": "Spot Price Ping",
+        "topic": "$(SPOTPRICEPING)",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "cf9f84d0.6fba78",
+        "x": 460,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "6a12b4af7f42b255",
+        "type": "mqtt in",
+        "z": "ce79ef46f01ee91a",
+        "name": "Spot Price Reading",
+        "topic": "$(SPOTPRICEREADING)",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "cf9f84d0.6fba78",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 1400,
+        "wires": [
+            [
+                "24cbd4a6.71fc9c"
+            ]
+        ]
+    },
+    {
+        "id": "6ae4c86c195591a0",
+        "type": "inject",
+        "z": "ce79ef46f01ee91a",
+        "name": "every 5 secs",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "30",
+        "topic": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 1600,
+        "wires": [
+            [
+                "5ff21ec231ed8483"
+            ]
+        ]
+    },
+    {
+        "id": "5ff21ec231ed8483",
+        "type": "switch",
+        "z": "ce79ef46f01ee91a",
+        "name": "",
+        "property": "device.opState.value",
+        "propertyType": "flow",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 310,
+        "y": 1600,
+        "wires": [
+            [
+                "19b4496d91529cb8"
+            ],
+            [
+                "6796de50f87b2817"
+            ]
+        ]
+    },
+    {
+        "id": "19b4496d91529cb8",
+        "type": "function",
+        "z": "ce79ef46f01ee91a",
+        "name": "Schedule Relay Control",
+        "func": "var device = flow.get('device');\nif (device.settingInProgress != 0) return null;\nvar now = new Date();\nvar minutes = now.getHours() * 60 + now.getMinutes();\nvar powerOn = 0;\nif (device.startScheduleTime.value > device.stopScheduleTime.value)\n{\n    if ((device.startScheduleTime.value <= minutes) && (minutes <= 1440) ) powerOn = 1;\n    if ((0 <= minutes) && (minutes < device.stopScheduleTime.value) )     powerOn = 1;\n}\nelse\n{\n    if ((device.startScheduleTime.value <= minutes) && (minutes < device.stopScheduleTime.value) ) powerOn = 1;\n}\nif (powerOn ==  device.powerOn.value) return null;\nreturn {topic : \"setting\", payload : {attr :\"powerOn\", value: powerOn} };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 1600,
+        "wires": [
+            [
+                "8e4c017e68b2e16b"
+            ]
+        ]
+    },
+    {
+        "id": "8e4c017e68b2e16b",
+        "type": "link out",
+        "z": "ce79ef46f01ee91a",
+        "name": "Schedule Relay Control Out",
+        "mode": "link",
+        "links": [
+            "706d51cc29f8cf61"
+        ],
+        "x": 675,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "6796de50f87b2817",
+        "type": "function",
+        "z": "ce79ef46f01ee91a",
+        "name": "Cost Relay Control",
+        "func": "var device = flow.get('device');\nif (device.settingInProgress != 0) return null;\nvar now = new Date();\nvar powerOn = 0;\nif ((device.startCostTime.value < now.getTime())  && (now.getTime() < device.stopCostTime.value) ) powerOn = 1;\nif (powerOn ==  device.powerOn.value) return null;\nreturn {topic : \"setting\", payload : {attr :\"powerOn\", value: powerOn} };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 1660,
+        "wires": [
+            [
+                "8e4c017e68b2e16b"
+            ]
+        ]
+    },
+    {
         "id": "68f91193.6031a",
         "type": "template",
         "z": "c4285970.3276d8",
@@ -1989,7 +2344,7 @@
         "server": "44b51478.9c022c",
         "client": "",
         "x": 160,
-        "y": 840,
+        "y": 980,
         "wires": [
             [
                 "ea909034.6fb25"
@@ -2004,7 +2359,7 @@
         "server": "44b51478.9c022c",
         "client": "",
         "x": 950,
-        "y": 840,
+        "y": 980,
         "wires": []
     },
     {
@@ -2019,7 +2374,7 @@
             "080e8b7be1b3f16a"
         ],
         "x": 395,
-        "y": 840,
+        "y": 980,
         "wires": []
     },
     {
@@ -2034,7 +2389,7 @@
             "9c19993afce72c6e"
         ],
         "x": 755,
-        "y": 840,
+        "y": 980,
         "wires": [
             [
                 "62aaa250.9b67dc"
@@ -2453,7 +2808,7 @@
         "fieldType": "msg",
         "format": "javascript",
         "syntax": "mustache",
-        "template": "// Global Javascript\n        useWebSockets(true);\n        var blinkyPowerRelayDevice = null;\n        var appDeviceInfo = \n        {\n            config:\n            {\n                deviceType  : '{{{payload.script.deviceType}}}',\n                name        : '{{{payload.script.name}}}',\n                project     : '{{{payload.script.project}}}'\n            },\n            device: null\n        };\n        var archiveRequestList = [];\n        var archiveList = [];\n        var archiveList = [];\n        var pingInterval = 2000;\n        var lastPing = 0;\n\n\n        \n        function onDocumentReady()\n        {\n            setRemoteApp(false);\n            if (remoteApp)\n            {\n                getCreds();\n                setInterval(function(){getCreds();}, 1000);\n            }\n            else\n            {\n                $('#userCardId').hide();\n            }\n            $('#archiveCardId').hide();\n            setInterval(ping, 1000);\n            $('#nsamplesButtonId').hide();\n            $('#nfilterButtonId').hide();\n\n            disableSettings(true);\n        }\n        function onWebSocketOpen()\n        {\n            if (remoteApp) getArchive(24);\n        }\n        function onWebSocketClose()\n        {\n            \n        }\n        function onWebSocketMessage(msg)\n        {\n            switch(msg.topic)\n            {\n                case 'readings':\n                    if ((msg.mqttDevice.name == appDeviceInfo.config.name) && (msg.mqttDevice.deviceType == appDeviceInfo.config.deviceType)  && (msg.mqttDevice.project == appDeviceInfo.config.project) )\n                    {\n                        lastPing = new Date().getTime();\n                        heartbeat();\n                        appDeviceInfo.device = JSON.parse(msg.payload);\n                        updateDmaReadings(appDeviceInfo.device);\n                    }\n                    break;\n                case 'readDatabase':\n                    if (msg.userID == userID)\n                    {\n                        if ((msg.payload.device.deviceType == appDeviceInfo.config.deviceType) && (msg.payload.device.name == appDeviceInfo.config.name) )\n                            putArchiveValues(msg.payload);\n                    }\n                    break;\n                case 'renew':\n                    if (msg.userID == userID)\n                    {\n                        updateCookie(msg);\n                    }\n                    break;\n                case 'permissionError':\n                    if (msg.userID == userID)\n                    {\n                        acknowledgeDialog('Permission', 'Error', msg.payload);\n                    }\n                    break;\n                case 'loginExpired':\n                    if (msg.userID == userID)\n                    {\n                       location.reload();\n                    }\n                    break;\n                default:\n                    break;\n            }\n        }\n        function ping()\n        {\n            {\n                if (appDeviceInfo.device != null)\n                {\n                    if (appDeviceInfo.device.settingInProgress == 1) return;\n                }\n                var now = new Date().getTime();\n                if ((now - lastPing) > pingInterval)\n                {\n                    lastPing = now;\n                    var actionMsg = \n                        {\n                            topic   : appDeviceInfo.config.project + '/' +  appDeviceInfo.config.deviceType + '/' +  appDeviceInfo.config.name + '/setting/ping',\n                            payload : true\n                        };\n                    sendActionMsg('ping', 'ping', actionMsg);\n               }\n            }        \n        }\n        function sendSetting(payload)\n        {\n            var actionMsg = \n                {\n                    topic   : appDeviceInfo.config.project + '/' +  appDeviceInfo.config.deviceType + '/' +  appDeviceInfo.config.name + '/setting/setting',\n                    payload : payload\n                };\n            sendActionMsg('setting','setting',actionMsg);\n        }\n        function reset(actionFlag)\n        {\n            var headerText = 'Warning';\n            var title = 'Resetting Tray';\n            var text = 'I hope you know what you are doing.';\n            var buttonTexts = ['Reset', 'Cancel'];\n            var buttonFunctions = \n            [\n                function()\n                {\n                    $( this ).dialog( \"close\" );\n                    var actionMsg = \n                        {\n                            topic   : appDeviceInfo.config.project + '/' +  appDeviceInfo.config.deviceType + '/' +  appDeviceInfo.config.name + '/setting/reset',\n                            payload : actionFlag\n                        };\n                    sendActionMsg('reset','setting',actionMsg);\n                 }, \n                function()\n                {\n                    $( this ).dialog( \"close\" );\n                }\n            ];\n            if (actionFlag == 2)\n            {\n                title = 'Rebooting Tray';\n                buttonTexts[0] = 'Reboot';\n            }\n            optionDialog(headerText, title, text, buttonTexts, buttonFunctions);\n            \n        }\n",
+        "template": "// Global Javascript\n        useWebSockets(true);\n        var blinkyPowerRelayDevice = null;\n        var appDeviceInfo = \n        {\n            config:\n            {\n                deviceType  : '{{{payload.script.deviceType}}}',\n                name        : '{{{payload.script.name}}}',\n                project     : '{{{payload.script.project}}}'\n            },\n            device: null\n        };\n        var archiveRequestList = [];\n        var archiveList = [];\n        var archiveList = [];\n        var pingInterval = 2000;\n        var lastPing = 0;\n\n        var changingState = false;\n        var expertSettingsVisible = true;\n        var nsamplesChanged = false;\n        var nfilterChanged = false;\n        var startScheduleTimeChanged = false;\n        var stopScheduleTimeChanged = false;\n        var startCostSearchTimeChanged = false;\n        var stopCostSearchTimeChanged = false;\n        var costDurationChanged = false;\n\n        function onDocumentReady()\n        {\n            setRemoteApp(false);\n            if (remoteApp)\n            {\n                getCreds();\n                setInterval(function(){getCreds();}, 1000);\n            }\n            else\n            {\n                $('#userCardId').hide();\n            }\n            $('#archiveCardId').hide();\n            setInterval(ping, 1000);\n            $('#nsamplesButtonId').hide();\n            $('#nfilterButtonId').hide();\n            $('#startScheduleTimeButtonId').hide();\n            $('#stopScheduleTimeButtonId').hide();\n            $('#startCostSearchTimeButtonId').hide();\n            $('#stopCostSearchTimeButtonId').hide();\n            $('#costDurationButtonId').hide();\n           \n            $('#startScheduleTimeInputId').timepicker({});\n            $('#stopScheduleTimeInputId').timepicker({});\n            $('#startCostSearchTimeInputId').timepicker({});\n            $('#stopCostSearchTimeInputId').timepicker({});\n            $('#costDurationInputId').timepicker({\"showButtonPanel\":  false,\"showTitlePanel\":  false});\n\n            disableSettings(true);\n\n            $('#expertSettingsCard').hide();\n            expertSettingsVisible = false;\n            $('#expertSettingsButton').text(\"Show\");\n            $('#manualModeCard').hide();\n            $('#scheduleModeCard').hide();\n        }\n        function onWebSocketOpen()\n        {\n            if (remoteApp) getArchive(24);\n        }\n        function onWebSocketClose()\n        {\n            \n        }\n        function onWebSocketMessage(msg)\n        {\n            switch(msg.topic)\n            {\n                case 'readings':\n                    if ((msg.mqttDevice.name == appDeviceInfo.config.name) && (msg.mqttDevice.deviceType == appDeviceInfo.config.deviceType)  && (msg.mqttDevice.project == appDeviceInfo.config.project) )\n                    {\n                        lastPing = new Date().getTime();\n                        heartbeat();\n                        appDeviceInfo.device = JSON.parse(msg.payload);\n                        updateDmaReadings(appDeviceInfo.device);\n                    }\n                    break;\n                case 'readDatabase':\n                    if (msg.userID == userID)\n                    {\n                        if ((msg.payload.device.deviceType == appDeviceInfo.config.deviceType) && (msg.payload.device.name == appDeviceInfo.config.name) )\n                            putArchiveValues(msg.payload);\n                    }\n                    break;\n                case 'renew':\n                    if (msg.userID == userID)\n                    {\n                        updateCookie(msg);\n                    }\n                    break;\n                case 'permissionError':\n                    if (msg.userID == userID)\n                    {\n                        acknowledgeDialog('Permission', 'Error', msg.payload);\n                    }\n                    break;\n                case 'loginExpired':\n                    if (msg.userID == userID)\n                    {\n                       location.reload();\n                    }\n                    break;\n                default:\n                    break;\n            }\n        }\n        function ping()\n        {\n            {\n                if (appDeviceInfo.device != null)\n                {\n                    if (appDeviceInfo.device.settingInProgress == 1) return;\n                }\n                var now = new Date().getTime();\n                if ((now - lastPing) > pingInterval)\n                {\n                    lastPing = now;\n                    var actionMsg = \n                        {\n                            topic   : appDeviceInfo.config.project + '/' +  appDeviceInfo.config.deviceType + '/' +  appDeviceInfo.config.name + '/setting/ping',\n                            payload : true\n                        };\n                    sendActionMsg('ping', 'ping', actionMsg);\n               }\n            }        \n        }\n        function sendSetting(payload)\n        {\n            var actionMsg = \n                {\n                    topic   : appDeviceInfo.config.project + '/' +  appDeviceInfo.config.deviceType + '/' +  appDeviceInfo.config.name + '/setting/setting',\n                    payload : payload\n                };\n            sendActionMsg('setting','setting',actionMsg);\n        }\n        function reset(actionFlag)\n        {\n            var headerText = 'Warning';\n            var title = 'Resetting Tray';\n            var text = 'I hope you know what you are doing.';\n            var buttonTexts = ['Reset', 'Cancel'];\n            var buttonFunctions = \n            [\n                function()\n                {\n                    $( this ).dialog( \"close\" );\n                    var actionMsg = \n                        {\n                            topic   : appDeviceInfo.config.project + '/' +  appDeviceInfo.config.deviceType + '/' +  appDeviceInfo.config.name + '/setting/reset',\n                            payload : actionFlag\n                        };\n                    sendActionMsg('reset','setting',actionMsg);\n                 }, \n                function()\n                {\n                    $( this ).dialog( \"close\" );\n                }\n            ];\n            if (actionFlag == 2)\n            {\n                title = 'Rebooting Tray';\n                buttonTexts[0] = 'Reboot';\n            }\n            optionDialog(headerText, title, text, buttonTexts, buttonFunctions);\n            \n        }\n",
         "output": "str",
         "x": 670,
         "y": 380,
@@ -2510,13 +2865,13 @@
         "fieldType": "msg",
         "format": "html",
         "syntax": "mustache",
-        "template": "    <div width=\"100%\">\n{{{payload.html.dashboard}}}\n{{{payload.html.timePlot}}}\n{{{payload.html.archive}}}\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12'>\n{{{payload.html.user}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12'>\n{{{payload.html.wifimon}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12'>\n{{{payload.html.reset}}}\n            </div>\n        </div>\n    </div>",
+        "template": "    <div width=\"100%\">\n{{{payload.html.dashboard}}}\n{{{payload.html.opModes}}}\n{{{payload.html.expert}}}\n{{{payload.html.timePlot}}}\n{{{payload.html.archive}}}\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12'>\n{{{payload.html.user}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12'>\n{{{payload.html.wifimon}}}\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12'>\n{{{payload.html.reset}}}\n            </div>\n        </div>\n    </div>",
         "output": "str",
         "x": 970,
-        "y": 620,
+        "y": 700,
         "wires": [
             [
-                "9caafb0f1f33ec3d"
+                "8aee90afb65f0a8f"
             ]
         ]
     },
@@ -2532,7 +2887,7 @@
         "template": "<!-- Dashboard HTML -->\n                <div class='card'>\n                    <p class='card-title'>WiFi Connection</p>\n                    <div class='card-body' align=\"center\">\n                        <div class='row'  style='padding-top: 0px;'>\n                            <table width='100%'>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Device Update</span>\n                                    </td>\n                                    <td width='20%' align='center'></td>\n                                    <td width='20%' align='center'>\n                                        <img src='/img/heartRed.png' id='heartBeatID' width='100px' height='100px'/>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Signal Level (dBm)</span>\n                                    </td>\n                                    <td width='20%' align='center'></td>\n                                    <td width='20%' align='center'>\n                                        <span class='card-text' id='signalLevelId' >-100</span>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Link Quality (/70)</span>\n                                    </td>\n                                    <td width='20%' align='center'></td>\n                                    <td width='20%' align='center'>\n                                        <span class='card-text' id='linkQualityId' >-1</span>\n                                    </td>\n                                </tr>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n",
         "output": "str",
         "x": 990,
-        "y": 540,
+        "y": 620,
         "wires": [
             [
                 "3fb4b4a8.ec76fc"
@@ -2551,7 +2906,7 @@
         "template": "<!-- Archive HTML -->\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12' align='center'>\n                <div class='card' id=archiveCardId>\n                    <p class='card-title'>Archive</p>\n                    <div class='card-body' align=\"center\">\n                        <div class='row' >\n                            <table width='100%'>\n                                <tr>\n                                    <td width='10%' align='center'>\n                                        <button class='btn btn-block big-text' style='background-color:var(--color1);color:var(--color5)' id=\"archive2hrButton\" onclick=\"getArchive(2)\" >2</button>\n                                    </td>\n                                    <td width='10%'  align='center'>\n                                        <button class='btn btn-block big-text' style='background-color:var(--color1);color:var(--color5)' id=\"archive4hrButton\" onclick=\"getArchive(4)\" >4</button>\n                                    </td>\n                                    <td width='10%'  align='center'>\n                                        <button class='btn btn-block big-text' style='background-color:var(--color1);color:var(--color5)' id=\"archive8hrButton\" onclick=\"getArchive(8)\" >8</button>\n                                    </td>\n                                    <td width='10%'  align='center'>\n                                        <button class='btn btn-block big-text' style='background-color:var(--color1);color:var(--color5)' id=\"archive24hrButton\" onclick=\"getArchive(24)\" >24</button>\n                                    </td>\n                                    <td width='10%' align='center'>\n                                        <button class='btn btn-block big-text' style='background-color:var(--color1);color:var(--color5)' id=\"archive72hrButton\" onclick=\"getArchive(72)\" >72</button>\n                                    </td>\n                                    <td width='10%' align='center'>\n                                        <button class='btn btn-block big-text' style='background-color:var(--color1);color:var(--color5)' id=\"archive168hrButton\" onclick=\"getArchive(168)\" >168</button>\n                                    </td>\n                                    <td width='10%' align='center'>\n                                        <span class='big-text' >Hours</span>\n                                    </td>\n                                </tr>\n                            </table>\n                        </div>\n                        <div class='row vert-pad'>\n                            <div class='col-md-12'>\n                                <div id=\"archiveChart\" width=\"100%\" ></div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n",
         "output": "str",
         "x": 990,
-        "y": 460,
+        "y": 540,
         "wires": [
             [
                 "4f8cafa.a57065"
@@ -2570,7 +2925,7 @@
         "template": "                <div class='card' id='userCardId'>\n                    <div class='card-body' align=\"center\">\n                        <table width=\"100%\">\n                            <tr>\n                                <td  align=\"left\">\n                                     <span class='card-text' style='color:black;'>User:</span>\n                                </td>\n                                <td  align=\"right\">\n                                     <span class='card-text' id='usernameId'></span>\n                                </td>\n                            </tr>\n                            <tr>\n                                <td  align=\"left\">\n                                    <span class='card-text' style='color:black;'>Time left:</span>\n                                </td>\n                                <td  align=\"right\">\n                                     <span class='card-text' id='expTimeId'></span>\n                                </td>\n                            </tr>\n                        </table>\n                        <table width=\"100%\">\n                            <tr>\n                                <td width=\"40%\">\n                                    <button class='btn btn-block card-button big-text' id='logoutButton' onclick=\"renew()\" >Renew</button>\n                                </td>\n                                <td width=\"10%\"></td>\n                                <td width=\"40%\">\n                                    <button class='btn btn-block card-button big-text' id='logoutButton' onclick=\"logout()\" >Logout</button>\n                                </td>\n                            </tr>\n                        </table>\n                    </div>\n                </div>\n",
         "output": "str",
         "x": 980,
-        "y": 500,
+        "y": 580,
         "wires": [
             [
                 "cefdafa8.91d69"
@@ -2608,7 +2963,7 @@
         "template": "                <div class='card' id='reset'>\n                    <div class='card-body' align=\"center\">\n                         <table width=\"100%\">\n                            <tr>\n                                <td width=\"40%\">\n                                    <button class='btn btn-block card-button big-text' id='resetButton' onclick=\"reset(1)\" >Reset</button>\n                                </td>\n                                <td width=\"10%\"></td>\n                                <td width=\"40%\">\n                                    <button class='btn btn-block card-button big-text' id='rebootButton'onclick=\"reset(2)\" >Reboot</button>\n                                </td>\n                            </tr>\n                        </table>\n                    </div>\n                </div>\n",
         "output": "str",
         "x": 980,
-        "y": 580,
+        "y": 660,
         "wires": [
             [
                 "864cffa0.3724b"
@@ -2624,13 +2979,13 @@
         "fieldType": "msg",
         "format": "html",
         "syntax": "mustache",
-        "template": "<!-- Dashboard HTML -->\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12' align='center'>\n                <div class='card'>\n                    <p class='card-title'>Dashboard</p>\n                    <div class='card-body' align=\"center\">\n                        <div class='row' style='padding-bottom: 25px;'>\n                            <table width='100%'>\n                                 <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Power On/Off</span>\n                                    </td>\n                                    <td width='20%' align='center'>\n                                        <button class='btn btn-block big-text' style='background-color:grey;color:black' id='powerOnButtonId' onclick=\"powerOn()\" >?</button>\n                                    </td>\n                                    <td width='20%'>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Power (W)</span>\n                                    </td>\n                                    <td width='20%' align='center'>\n                                        <span class='card-text'  id='powerId' >-100</span>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block card-button big-text' onclick=\"editDevice('power')\" >Edit</button>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Current (A)</span>\n                                    </td>\n                                    <td width='20%' align='center'>\n                                        <span class='card-text'  id='currentId' >-100</span>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block card-button big-text' onclick=\"editDevice('current')\" >Edit</button>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Sample Rate (kHz)</span>\n                                    </td>\n                                    <td width='20%' align='center'>\n                                        <span class='card-text'  id='adcSampleRateId' >-100</span>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block card-button big-text' onclick=\"editDevice('adcSampleRate')\" >Edit</button>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='60%'>\n                                        <span class='card-text' >Average Samples</span>\n                                    </td>\n                                    <td width='20%'>\n                                        <input id=\"nsamplesInputId\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"8\" oninput=\"nsamplesChange()\"/>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block card-button big-text' id=\"nsamplesButtonId\" onclick=\"nsamples()\" >&#10003;</button>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='60%'>\n                                        <span class='card-text' >Line Filter Samples</span>\n                                    </td>\n                                    <td width='20%'>\n                                        <input id=\"nfilterInputId\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"8\" oninput=\"nfilterChange()\"/>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block card-button big-text' id=\"nfilterButtonId\" onclick=\"nfilter()\" >&#10003;</button>\n                                    </td>\n                                </tr>\n                            </table>\n                        </div>\n                   </div>\n                </div>\n                <div id=\"editDeviceDialog\" title=\"Edit Device\" class='card'>\n                    <p class='card-title' id='editDeviceDialogAttribute'>Attribute</p>\n                    <div class='card-body'>\n                        <table>\n                            <tr>\n                                <td width=\"70%\" align=\"left\">  <span class=\"tableHeading tableText\">LoLo</span></td>\n                                <td width=\"30%\" align=\"right\"><input class=\"form-control tableText\" id=\"loloAlarm\" type=\"text\" value=\"0\" /></td>\n                            </tr>\n                            <tr>\n                                <td width=\"70%\" align=\"left\">  <span class=\"tableHeading tableText\">LOW</span></td>\n                                <td width=\"30%\" align=\"right\"><input class=\"form-control tableText\" id=\"lowAlarm\" type=\"text\" value=\"0\" /></td>\n                            </tr>\n                            <tr>\n                                <td width=\"70%\" align=\"left\">  <span class=\"tableHeading tableText\">HIGH</span></td>\n                                <td width=\"30%\" align=\"right\"><input class=\"form-control tableText\" id=\"highAlarm\" type=\"text\" value=\"0\" /></td>\n                            </tr>\n                            <tr>\n                                <td width=\"70%\" align=\"left\">  <span class=\"tableHeading tableText\">HiHi</span></td>\n                                <td width=\"30%\" align=\"right\"><input class=\"form-control tableText\" id=\"hihiAlarm\" type=\"text\" value=\"0\" /></td>\n                            </tr>\n                            <tr>\n                                <td width=\"70%\" align=\"left\">  <span class=\"tableHeading tableText\">Notify Name</span></td>\n                                <td width=\"30%\" align=\"right\"><input class=\"form-control tableText\" id=\"notifyName\" type=\"text\" value=\"\" /></td>\n                            </tr>\n                            <tr>\n                                <td width=\"70%\" align=\"left\">  <span class=\"tableHeading tableText\">Notify Number</span></td>\n                                <td width=\"30%\" align=\"right\"><input class=\"form-control tableText\" id=\"notifyNumber\" type=\"text\" value=\"\" /></td>\n                            </tr>\n                        </table>\n                    </div>\n                </div>\n            </div>\n        </div>\n",
+        "template": "<!-- Dashboard HTML -->\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12' align='center'>\n                <div class='card'>\n                    <p class='card-title'>Dashboard</p>\n                    <div class='card-body' align=\"center\">\n                        <div class='row' style='padding-bottom: 25px;'>\n                            <table width='100%'>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Power (W)</span>\n                                    </td>\n                                    <td width='20%' align='center'>\n                                    </td>\n                                    <td width='20%'>\n                                        <span class='card-text'  id='powerId' >-100</span>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Relay State</span>\n                                    </td>\n                                    <td width='20%' align='center'>\n                                    </td>\n                                    <td width='20%'>\n                                        <span class='card-text'  id='relayStateId' >?</span>\n                                    </td>\n                                </tr>\n                            </table>\n                        </div>\n                        <div class='row'>\n                            <table width='100%'>\n                                <tr>\n                                    <td></td>\n                                    <td style='padding-top:35px;' ><button class='btn btn-block big-text' id=\"manualStateButton\" onclick=\"changeOpState(0)\">Manual Mode</button></td>\n                                    <td></td>\n                                </tr>\n                                <tr>\n                                    <td></td>\n                                    <td style='padding-top:35px;' ><button class='btn btn-block big-text' id=\"scheduleStateButton\" onclick=\"changeOpState(1)\">Schedule Mode</button></td>\n                                    <td></td>\n                                </tr>\n                                <tr>\n                                    <td></td>\n                                    <td style='padding-top:35px;' ><button class='btn btn-block big-text' id=\"costStateButton\" onclick=\"changeOpState(2)\">Cost Mode</button></td>\n                                    <td></td>\n                                </tr>\n                            </table>\n                        </div>\n                   </div>\n                </div>\n                <div id=\"editDeviceDialog\" title=\"Edit Device\" class='card'>\n                    <p class='card-title' id='editDeviceDialogAttribute'>Attribute</p>\n                    <div class='card-body'>\n                        <table>\n                            <tr>\n                                <td width=\"70%\" align=\"left\">  <span class=\"tableHeading tableText\">LoLo</span></td>\n                                <td width=\"30%\" align=\"right\"><input class=\"form-control tableText\" id=\"loloAlarm\" type=\"text\" value=\"0\" /></td>\n                            </tr>\n                            <tr>\n                                <td width=\"70%\" align=\"left\">  <span class=\"tableHeading tableText\">LOW</span></td>\n                                <td width=\"30%\" align=\"right\"><input class=\"form-control tableText\" id=\"lowAlarm\" type=\"text\" value=\"0\" /></td>\n                            </tr>\n                            <tr>\n                                <td width=\"70%\" align=\"left\">  <span class=\"tableHeading tableText\">HIGH</span></td>\n                                <td width=\"30%\" align=\"right\"><input class=\"form-control tableText\" id=\"highAlarm\" type=\"text\" value=\"0\" /></td>\n                            </tr>\n                            <tr>\n                                <td width=\"70%\" align=\"left\">  <span class=\"tableHeading tableText\">HiHi</span></td>\n                                <td width=\"30%\" align=\"right\"><input class=\"form-control tableText\" id=\"hihiAlarm\" type=\"text\" value=\"0\" /></td>\n                            </tr>\n                            <tr>\n                                <td width=\"70%\" align=\"left\">  <span class=\"tableHeading tableText\">Notify Name</span></td>\n                                <td width=\"30%\" align=\"right\"><input class=\"form-control tableText\" id=\"notifyName\" type=\"text\" value=\"\" /></td>\n                            </tr>\n                            <tr>\n                                <td width=\"70%\" align=\"left\">  <span class=\"tableHeading tableText\">Notify Number</span></td>\n                                <td width=\"30%\" align=\"right\"><input class=\"form-control tableText\" id=\"notifyNumber\" type=\"text\" value=\"\" /></td>\n                            </tr>\n                        </table>\n                    </div>\n                </div>\n            </div>\n        </div>\n",
         "output": "str",
         "x": 1000,
         "y": 380,
         "wires": [
             [
-                "64b8974a8d469849"
+                "0ca81e2717a6249c"
             ]
         ]
     },
@@ -2643,7 +2998,7 @@
         "fieldType": "msg",
         "format": "javascript",
         "syntax": "mustache",
-        "template": "// Update Readings Javascript\n        var nsamplesChanged = false;\n        var nfilterChanged = false;\n        function updateDmaReadings()\n        {\n            if (appDeviceInfo.device.settingInProgress == 0)\n            {\n                disableSettings(false);\n            }\n            else\n            {\n                disableSettings(true);\n            }\n            $('#linkQualityId').text(appDeviceInfo.device.linkQuality.value);\n            $('#signalLevelId').text(appDeviceInfo.device.signalLevel.value);\n            $('#currentId').text(appDeviceInfo.device.current.value);\n            $('#powerId').text(appDeviceInfo.device.power.value);\n            $('#adcSampleRateId').text(appDeviceInfo.device.adcSampleRate.value);\n            if (!nsamplesChanged)$('#nsamplesInputId').val(appDeviceInfo.device.nsamples.value);\n            if (!nfilterChanged)$('#nfilterInputId').val(appDeviceInfo.device.nfilter.value);\n\n            var buttonColor = '#ff0000';\n            var buttonTextColor = '#000000';\n            var buttonText = \"Off\";\n            if (appDeviceInfo.device.powerOn.value > 0) \n            {\n                buttonColor = '#00ff00';\n                buttonText = 'On';\n            }\n            $('#powerOnButtonId').css('color', buttonTextColor); \n            $('#powerOnButtonId').css('background-color', buttonColor); \n            $('#powerOnButtonId').text(buttonText); \n\n            addTracePointsToTimePlot([appDeviceInfo.device.power.value,appDeviceInfo.device.powerOn.value]);\n\n        }\n        function disableSettings(disable)\n        {\n            $('#nfilterInputId').attr('disabled',disable);\n            $('#nsamplesInputId').attr('disabled',disable);\n            $('#powerOnButtonId').attr('disabled',disable);\n\n            $('#resetButton').attr('disabled',disable);\n            $('#rebootButton').attr('disabled',disable);\n\n        }\n        function powerOn()\n        {\n            if (appDeviceInfo.device.powerOn.value > 0)\n            {\n                appDeviceInfo.device.powerOn.value = 0;\n            }\n            else\n            {\n                appDeviceInfo.device.powerOn.value = 1;\n                \n            }\n            $('#ledOnButtonId').css('color', 'black'); \n            $('#ledOnButtonId').css('background-color', 'grey'); \n            $('#ledOnButtonId').text('?'); \n            var payload = {'attr': 'powerOn', 'value':appDeviceInfo.device.powerOn.value};\n            sendSetting(payload);\n        }\n        function nsamplesChange()\n        {\n            nsamplesChanged = true;\n            $('#nsamplesButtonId').show();\n        }\n        function nfilterChange()\n        {\n            nfilterChanged = true;\n            $('#nfilterButtonId').show();\n        }\n        function nsamples()\n        {\n            $('#nsamplesButtonId').hide();\n            if (isNaN($('#nsamplesInputId').val()))\n            {\n                nsamplesChanged = false;\n                return;\n            }\n            var payload = {'attr': 'nsamples', 'value':Number($('#nsamplesInputId').val())};\n            sendSetting(payload);\n            nsamplesChanged = false;\n        }\n        function nfilter()\n        {\n            $('#nfilterButtonId').hide();\n            if (isNaN($('#nfilterInputId').val()))\n            {\n                nfilterChanged = false;\n                return;\n            }\n            var payload = {'attr': 'nfilter', 'value':Number($('#nfilterInputId').val())};\n            sendSetting(payload);\n            nfilterChanged = false;\n        }\n",
+        "template": "// Update Readings Javascript\n        function updateDmaReadings()\n        {\n            if (appDeviceInfo.device.settingInProgress == 0)\n            {\n                disableSettings(false);\n            }\n            else\n            {\n                disableSettings(true);\n            }\n            $('#linkQualityId').text(appDeviceInfo.device.linkQuality.value);\n            $('#signalLevelId').text(appDeviceInfo.device.signalLevel.value);\n            $('#currentId').text(appDeviceInfo.device.current.value);\n            $('#powerId').text(appDeviceInfo.device.power.value);\n            $('#powerExpertId').text(appDeviceInfo.device.power.value);\n            $('#adcSampleRateId').text(appDeviceInfo.device.adcSampleRate.value);\n            $('#timezoneId').text(appDeviceInfo.device.timezone.value);\n            $('#timezoneCostId').text(appDeviceInfo.device.timezone.value);\n            \n            var startCostTime = new Date(appDeviceInfo.device.startCostTime.value).toLocaleString('en-SE',{year: 'numeric', month: '2-digit', day : '2-digit', hour12:false, hour: '2-digit', minute: '2-digit'}).replace(',', '');\n            var stopCostTime  = new Date(appDeviceInfo.device.stopCostTime.value).toLocaleString('en-SE',{year: 'numeric', month: '2-digit', day : '2-digit', hour12:false, hour: '2-digit', minute: '2-digit'}).replace(',', '');\n            $('#startCostTimeId').text(startCostTime);\n            $('#stopCostTimeId').text(stopCostTime);\n            \n            $('#avgDurationCostId').text(appDeviceInfo.device.avgDurationCost.value.toString());\n            var nextDayCostAvailable = \"Available\" ;\n            if (appDeviceInfo.device.avgDurationCost.value == 0) nextDayCostAvailable = \"Not Available\";\n            $('#nextDayCostAvailableId').text(nextDayCostAvailable);\n            \n            \n            if (!nsamplesChanged)$('#nsamplesInputId').val(appDeviceInfo.device.nsamples.value);\n            if (!nfilterChanged)$('#nfilterInputId').val(appDeviceInfo.device.nfilter.value);\n            if (!startScheduleTimeChanged) $('#startScheduleTimeInputId').val(minutesAfterMidnightToTimeString(appDeviceInfo.device.startScheduleTime.value));\n            if (!stopScheduleTimeChanged) $('#stopScheduleTimeInputId').val(minutesAfterMidnightToTimeString(appDeviceInfo.device.stopScheduleTime.value));\n            if (!startCostSearchTimeChanged) $('#startCostSearchTimeInputId').val(minutesAfterMidnightToTimeString(appDeviceInfo.device.startCostSearchTime.value));\n            if (!stopCostSearchTimeChanged) $('#stopCostSearchTimeInputId').val(minutesAfterMidnightToTimeString(appDeviceInfo.device.stopCostSearchTime.value));\n            if (!costDurationChanged)$('#costDurationInputId').val(minutesAfterMidnightToTimeString(appDeviceInfo.device.costDuration.value));\n\n            var buttonColor = '#00ff00';\n            var buttonTextColor = '#000000';\n            var buttonText = \"Off\";\n            var relayStateTextColor = \"white\";\n            if (appDeviceInfo.device.powerOn.value > 0) \n            {\n                buttonColor = '#ff0000';\n                buttonText = 'On';\n                relayStateTextColor = buttonColor;\n            }\n            $('#relayStateId').css('color', relayStateTextColor);\n            $('#relayStateId').text(buttonText);\n            $('#powerOnButtonId').css('color', buttonTextColor); \n            $('#powerOnButtonId').css('background-color', buttonColor); \n            $('#powerOnButtonId').text(buttonText); \n\n            if (!changingState)\n            {\n                switch(appDeviceInfo.device.opState.value) \n                {\n                  case 0:\n                    $('#manualStateButton').css(\"background-color\", \"green\");\n                    $('#scheduleStateButton').css(\"background-color\", \"white\");\n                    $('#costStateButton').css(\"background-color\", \"white\");\n                    $('#manualModeCard').show();\n                    $('#scheduleModeCard').hide();\n                    $('#costModeCard').hide();\n                    break;\n                  case 1:\n                    // code block\n                    $('#manualStateButton').css(\"background-color\", \"white\");\n                    $('#scheduleStateButton').css(\"background-color\", \"green\");\n                    $('#costStateButton').css(\"background-color\", \"white\");\n                    $('#manualModeCard').hide();\n                    $('#scheduleModeCard').show();\n                    $('#costModeCard').hide();\n                    break;\n                  case 2:\n                    // code block\n                    $('#manualStateButton').css(\"background-color\", \"white\");\n                    $('#scheduleStateButton').css(\"background-color\", \"white\");\n                    $('#costStateButton').css(\"background-color\", \"green\");\n                    $('#manualModeCard').hide();\n                    $('#scheduleModeCard').hide();\n                    $('#costModeCard').show();\n                    break;\n                  default:\n                    // code block\n                    $('#manualStateButton').css(\"background-color\", \"grey\");\n                    $('#scheduleStateButton').css(\"background-color\", \"grey\");\n                    $('#costStateButton').css(\"background-color\", \"grey\");\n                    $('#manualModeCard').hide();\n                    $('#scheduleModeCard').hide();\n                    $('#costModeCard').hide();\n                }            \n                \n            }\n            addTracePointsToTimePlot([appDeviceInfo.device.power.value,appDeviceInfo.device.powerOn.value]);\n\n        }\n        function minutesAfterMidnightToTimeString(minutesAfterMidnight)\n        {\n            var hours = Math.floor(minutesAfterMidnight / 60);\n            var minutes = minutesAfterMidnight - (hours * 60);\n            var hourText = hours.toString();\n            if (hours < 10) hourText = '0' + hourText;\n            var minuteText = minutes.toString();\n            if (minutes < 10) minuteText = '0' + minuteText;\n            return hourText + \":\" + minuteText;\n        }\n        function timeStringToMinutesAfterMidnight(timeString)\n        {\n            var startTimeArray = timeString.split(':');\n            return Number(startTimeArray[0]) * 60 + Number(startTimeArray[1]);\n         }\n        function disableSettings(disable)\n        {\n            $('#nfilterInputId').attr('disabled',disable);\n            $('#nsamplesInputId').attr('disabled',disable);\n            $('#startScheduleTimeInputId').attr('disabled',disable);\n            $('#powerOnButtonId').attr('disabled',disable);\n            $('#manualStateButton').attr('disabled',disable);\n            $('#scheduleStateButton').attr('disabled',disable);\n            $('#costStateButton').attr('disabled',disable);\n\n            $('#resetButton').attr('disabled',disable);\n            $('#rebootButton').attr('disabled',disable);\n\n        }\n        function powerOn()\n        {\n            if (appDeviceInfo.device.powerOn.value > 0)\n            {\n                appDeviceInfo.device.powerOn.value = 0;\n            }\n            else\n            {\n                appDeviceInfo.device.powerOn.value = 1;\n                \n            }\n            $('#ledOnButtonId').css('color', 'black'); \n            $('#ledOnButtonId').css('background-color', 'grey'); \n            $('#ledOnButtonId').text('?'); \n            var payload = {'attr': 'powerOn', 'value':appDeviceInfo.device.powerOn.value};\n            sendSetting(payload);\n        }\n        function nsamplesChange()\n        {\n            nsamplesChanged = true;\n            $('#nsamplesButtonId').show();\n        }\n        function nfilterChange()\n        {\n            nfilterChanged = true;\n            $('#nfilterButtonId').show();\n        }\n        function startScheduleTimeChange()\n        {\n            startScheduleTimeChanged = true;\n            $('#startScheduleTimeButtonId').show();\n        }\n        function stopScheduleTimeChange()\n        {\n            stopScheduleTimeChanged = true;\n            $('#stopScheduleTimeButtonId').show();\n        }\n        function startCostSearchTimeChange()\n        {\n            startCostSearchTimeChanged = true;\n            $('#startCostSearchTimeButtonId').show();\n        }\n        function stopCostSearchTimeChange()\n        {\n            stopCostSearchTimeChanged = true;\n            $('#stopCostSearchTimeButtonId').show();\n        }\n         function costDurationChange()\n        {\n            costDurationChanged = true;\n            $('#costDurationButtonId').show();\n        }\n        function nsamples()\n        {\n            $('#nsamplesButtonId').hide();\n            if (isNaN($('#nsamplesInputId').val()))\n            {\n                nsamplesChanged = false;\n                return;\n            }\n            var payload = {'attr': 'nsamples', 'value':Number($('#nsamplesInputId').val())};\n            sendSetting(payload);\n            nsamplesChanged = false;\n        }\n        function nfilter()\n        {\n            $('#nfilterButtonId').hide();\n            if (isNaN($('#nfilterInputId').val()))\n            {\n                nfilterChanged = false;\n                return;\n            }\n            var payload = {'attr': 'nfilter', 'value':Number($('#nfilterInputId').val())};\n            sendSetting(payload);\n            nfilterChanged = false;\n        }\n        function startScheduleTime()\n        {\n            $('#startScheduleTimeButtonId').hide();\n            var minutes = timeStringToMinutesAfterMidnight($('#startScheduleTimeInputId').val());\n            var payload = {'attr': 'startScheduleTime', 'value':minutes};\n            sendSetting(payload);\n            startScheduleTimeChanged = false;\n        }\n        function stopScheduleTime()\n        {\n            $('#stopScheduleTimeButtonId').hide();\n            var minutes = timeStringToMinutesAfterMidnight($('#stopScheduleTimeInputId').val());\n            var payload = {'attr': 'stopScheduleTime', 'value':minutes};\n            sendSetting(payload);\n            stopScheduleTimeChanged = false;\n        }\n        function startCostSearchTime()\n        {\n            $('#startCostSearchTimeButtonId').hide();\n            var minutes = timeStringToMinutesAfterMidnight($('#startCostSearchTimeInputId').val());\n            var payload = {'attr': 'startCostSearchTime', 'value':minutes};\n            sendSetting(payload);\n            startCostSearchTimeChanged = false;\n        }\n        function stopCostSearchTime()\n        {\n            $('#stopCostSearchTimeButtonId').hide();\n            var minutes = timeStringToMinutesAfterMidnight($('#stopCostSearchTimeInputId').val());\n            var payload = {'attr': 'stopCostSearchTime', 'value':minutes};\n            sendSetting(payload);\n            stopCostSearchTimeChanged = false;\n        }\n        function costDuration()\n        {\n            $('#costDurationButtonId').hide();\n            var minutes = timeStringToMinutesAfterMidnight($('#costDurationInputId').val());\n            var payload = {'attr': 'costDuration', 'value':minutes};\n            sendSetting(payload);\n            costDurationChanged = false;\n        }\n        function expertSettings()\n        {\n            if (expertSettingsVisible)\n            {\n                $('#expertSettingsCard').hide();\n                $('#expertSettingsButton').text('Show');\n                expertSettingsVisible = false;\n            }\n            else\n            {\n                $('#expertSettingsCard').show();\n                $('#expertSettingsButton').text('Hide');\n                expertSettingsVisible = true;\n            }\n        }\n        function changeOpState(state)\n        {\n            var payload = {'attr': 'opState', 'value':state};\n            sendSetting(payload);\n        }\n ",
         "output": "str",
         "x": 700,
         "y": 420,
@@ -2677,8 +3032,8 @@
         "type": "subflow:8341090a.df9758",
         "z": "c4285970.3276d8",
         "name": "",
-        "x": 1270,
-        "y": 620,
+        "x": 1310,
+        "y": 700,
         "wires": []
     },
     {
@@ -2712,10 +3067,67 @@
         "template": "<!-- Dashboard HTML -->\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12' align='center'>\n                <div class='card'>\n                    <p class='card-title'>Time Plot</p>\n                    <div class='card-body' align=\"center\">\n                        <div id=\"timePlotChart\" width=\"100%\" ></div>\n                    </div>\n                </div>\n            </div>\n        </div>\n",
         "output": "str",
         "x": 990,
-        "y": 420,
+        "y": 500,
         "wires": [
             [
                 "7974c464.11ebac"
+            ]
+        ]
+    },
+    {
+        "id": "0ca81e2717a6249c",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "html.opModes",
+        "field": "payload.html.opModes",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!-- Dashboard HTML -->\n        <div class='row' style='padding-bottom: 25px;' id=\"manualModeCard\">\n            <div class='col-md-12' align='center'>\n                <div class='card'>\n                    <div class='card-body' align=\"center\" id=\"manualModeCardBody\">\n                        <div class='row' style='padding-bottom: 25px;'>\n                            <table width='100%'>\n                                 <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Power On/Off</span>\n                                    </td>\n                                    <td width='20%' align='center'>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block big-text' style='background-color:grey;color:black' id='powerOnButtonId' onclick=\"powerOn()\" >?</button>\n                                    </td>\n                                </tr>\n                            </table>\n                        </div>\n                   </div>\n                </div>\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;' id=\"scheduleModeCard\">\n            <div class='col-md-12' align='center'>\n                <div class='card'>\n                    <div class='card-body' align=\"center\" id=\"scheduleModeCardBody\">\n                        <div class='row' style='padding-bottom: 25px;'>\n                            <table width='100%'>\n                                <tr>\n                                    <td width='40%'>\n                                        <span class='card-text' >Time zone</span>\n                                    </td>\n                                    <td width='40%' align='left'>\n                                        <span class='card-text'  id='timezoneId' >?</span>\n                                    </td>\n                                    <td width='20%' align='right'>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='40%'>\n                                        <span class='card-text' >Start Time</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"startScheduleTimeInputId\" type=\"text\" value=\"0\" class=\"big-text\" size=\"5\" onclick=\"startScheduleTimeChange()\"/>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block card-button big-text' id=\"startScheduleTimeButtonId\" onclick=\"startScheduleTime()\" >&#10003;</button>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='40%'>\n                                        <span class='card-text' >Stop Time</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"stopScheduleTimeInputId\" type=\"text\" value=\"0\" class=\"big-text\" size=\"5\" onclick=\"stopScheduleTimeChange()\"/>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block card-button big-text' id=\"stopScheduleTimeButtonId\" onclick=\"stopScheduleTime()\" >&#10003;</button>\n                                    </td>\n                                </tr>\n                            </table>\n                        </div>\n                   </div>\n                </div>\n            </div>\n        </div>\n        <div class='row' style='padding-bottom: 25px;' id=\"costModeCard\">\n            <div class='col-md-12' align='center'>\n                <div class='card'>\n                    <div class='card-body' align=\"center\" id=\"costModeCardBody\">\n                        <div class='row' style='padding-bottom: 25px;'>\n                            <table width='100%'>\n                                 <tr>\n                                    <td width='40%'>\n                                        <span class='card-text' >Time zone</span>\n                                    </td>\n                                    <td width='40%' align='left'>\n                                        <span class='card-text'  id='timezoneCostId' >?</span>\n                                    </td>\n                                    <td width='20%' align='right'>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='40%'>\n                                        <span class='card-text' >Start Search</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"startCostSearchTimeInputId\" type=\"text\" value=\"0\" class=\"big-text\" size=\"5\" onclick=\"startCostSearchTimeChange()\"/>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block card-button big-text' id=\"startCostSearchTimeButtonId\" onclick=\"startCostSearchTime()\" >&#10003;</button>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='40%'>\n                                        <span class='card-text' >Stop Search</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"stopCostSearchTimeInputId\" type=\"text\" value=\"0\" class=\"big-text\" size=\"5\" onclick=\"stopCostSearchTimeChange()\"/>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block card-button big-text' id=\"stopCostSearchTimeButtonId\" onclick=\"stopCostSearchTime()\" >&#10003;</button>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='40%'>\n                                        <span class='card-text' >Duration</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <input id=\"costDurationInputId\" type=\"text\" value=\"0\" class=\"big-text\" size=\"5\" onclick=\"costDurationChange()\"/>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block card-button big-text' id=\"costDurationButtonId\" onclick=\"costDuration()\" >&#10003;</button>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='40%'>\n                                        <span class='card-text' >Relay On</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <span class='card-text'  id='startCostTimeId' >?</span>\n                                    </td>\n                                    <td width='20%'>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='40%'>\n                                        <span class='card-text' >Relay Off</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <span class='card-text'  id='stopCostTimeId' >?</span>\n                                    </td>\n                                    <td width='20%'>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='40%'>\n                                        <span class='card-text' >Avg. Rate (SEK/kW-hr)</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <span class='card-text'  id='avgDurationCostId' >?</span>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block card-button big-text' onclick=\"editDevice('avgDurationCost')\" >Edit</button>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='40%'>\n                                        <span class='card-text' >Next Day Cost Profile</span>\n                                    </td>\n                                    <td width='40%'>\n                                        <span class='card-text'  id='nextDayCostAvailableId' >?</span>\n                                    </td>\n                                    <td width='20%'>\n                                    </td>\n                                </tr>\n                            </table>\n                        </div>\n                   </div>\n                </div>\n            </div>\n        </div>\n",
+        "output": "str",
+        "x": 1000,
+        "y": 420,
+        "wires": [
+            [
+                "65433ddfa7ef28b2"
+            ]
+        ]
+    },
+    {
+        "id": "65433ddfa7ef28b2",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "html.expert",
+        "field": "payload.html.expert",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!-- Dashboard HTML -->\n        <div class='row' style='padding-bottom: 25px;'>\n            <div class='col-md-12' align='center'>\n                <div class='card'>\n                    <div class='row'>\n                        <div class='col-md-2'>\n                        </div>\n                        <div class='col-md-8'>\n                            <p class='card-title'>Expert Settings</p>\n                         </div>\n                        <div class='col-md-2'>\n                            <button class='btn btn-block card-button big-text' id=\"expertSettingsButton\" onclick=\"expertSettings()\" >Hide</button>\n                        </div>\n                    </div>\n                    <div class='card-body' id=\"expertSettingsCard\" align=\"center\">\n                        <div class='row' style='padding-bottom: 25px;'>\n                            <table width='100%'>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Power (W)</span>\n                                    </td>\n                                    <td width='20%' align='center'>\n                                        <span class='card-text'  id='powerExpertId' >-100</span>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block card-button big-text' onclick=\"editDevice('power')\" >Edit</button>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Current (A)</span>\n                                    </td>\n                                    <td width='20%' align='center'>\n                                        <span class='card-text'  id='currentId' >-100</span>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block card-button big-text' onclick=\"editDevice('current')\" >Edit</button>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='60%' >\n                                        <span class='card-text' >Sample Rate (kHz)</span>\n                                    </td>\n                                    <td width='20%' align='center'>\n                                        <span class='card-text'  id='adcSampleRateId' >-100</span>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block card-button big-text' onclick=\"editDevice('adcSampleRate')\" >Edit</button>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='60%'>\n                                        <span class='card-text' >Average Samples</span>\n                                    </td>\n                                    <td width='20%'>\n                                        <input id=\"nsamplesInputId\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"8\" oninput=\"nsamplesChange()\"/>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block card-button big-text' id=\"nsamplesButtonId\" onclick=\"nsamples()\" >&#10003;</button>\n                                    </td>\n                                </tr>\n                                <tr>\n                                    <td width='60%'>\n                                        <span class='card-text' >Line Filter Samples</span>\n                                    </td>\n                                    <td width='20%'>\n                                        <input id=\"nfilterInputId\" type=\"text\" value=\"0\" class=\"big-text\"  size=\"8\" oninput=\"nfilterChange()\"/>\n                                    </td>\n                                    <td width='20%'>\n                                        <button class='btn btn-block card-button big-text' id=\"nfilterButtonId\" onclick=\"nfilter()\" >&#10003;</button>\n                                    </td>\n                                </tr>\n                            </table>\n                        </div>\n                   </div>\n                </div>\n            </div>\n        </div>\n",
+        "output": "str",
+        "x": 990,
+        "y": 460,
+        "wires": [
+            [
+                "64b8974a8d469849"
+            ]
+        ]
+    },
+    {
+        "id": "8aee90afb65f0a8f",
+        "type": "template",
+        "z": "c4285970.3276d8",
+        "name": "extraCss",
+        "field": "payload.extraCss",
+        "fieldType": "msg",
+        "format": "css",
+        "syntax": "mustache",
+        "template": "        .ui-widget { font-size: 1.5em !important; }",
+        "output": "str",
+        "x": 1120,
+        "y": 700,
+        "wires": [
+            [
+                "9caafb0f1f33ec3d"
             ]
         ]
     }
