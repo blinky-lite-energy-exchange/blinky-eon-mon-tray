@@ -1440,9 +1440,10 @@
         "z": "ce79ef46f01ee91a",
         "name": "Save Settings to file in",
         "links": [
-            "aaabe575198f3fcc",
+            "8287f2bf4cdd395b",
             "a33e3eb6d5d30179",
-            "8287f2bf4cdd395b"
+            "aaabe575198f3fcc",
+            "cf75d205fd484043"
         ],
         "x": 1035,
         "y": 340,
@@ -2084,7 +2085,8 @@
         "y": 1300,
         "wires": [
             [
-                "bb6ef20619e92fb7"
+                "bb6ef20619e92fb7",
+                "61c2ee12fae9cbf1"
             ]
         ]
     },
@@ -2297,6 +2299,63 @@
                 "8e4c017e68b2e16b"
             ]
         ]
+    },
+    {
+        "id": "cc87e48c94a822d4",
+        "type": "function",
+        "z": "ce79ef46f01ee91a",
+        "name": "Write to file",
+        "func": "return {topic:'newPriceReading', payload:true};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 1300,
+        "wires": [
+            [
+                "cf75d205fd484043"
+            ]
+        ]
+    },
+    {
+        "id": "61c2ee12fae9cbf1",
+        "type": "delay",
+        "z": "ce79ef46f01ee91a",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 440,
+        "y": 1300,
+        "wires": [
+            [
+                "cc87e48c94a822d4"
+            ]
+        ]
+    },
+    {
+        "id": "cf75d205fd484043",
+        "type": "link out",
+        "z": "ce79ef46f01ee91a",
+        "name": "Delay after spot price Ping",
+        "mode": "link",
+        "links": [
+            "52c3ee5d26adffbe"
+        ],
+        "x": 695,
+        "y": 1300,
+        "wires": []
     },
     {
         "id": "68f91193.6031a",
