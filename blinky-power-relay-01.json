@@ -9,7 +9,7 @@
   "linkQuality": {
     "action": "reading",
     "type": "scalar",
-    "value": 47,
+    "value": 49,
     "unit": "/70",
     "alarm": {
       "value": 0,
@@ -29,7 +29,7 @@
   "signalLevel": {
     "action": "reading",
     "type": "scalar",
-    "value": -63,
+    "value": -61,
     "unit": "dBm",
     "alarm": {
       "value": 1,
@@ -89,7 +89,7 @@
   "adcSampleRate": {
     "action": "reading",
     "type": "scalar",
-    "value": 7.326,
+    "value": 7.325,
     "unit": "kHz",
     "alarm": {
       "value": 0,
