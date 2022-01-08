@@ -1,0 +1,149 @@
+{
+  "deviceType": "blinky-eon-mon",
+  "name": "01",
+  "arcPeriod": 7200000,
+  "timeStamp": 1584283380359,
+  "lastArchive": 1584283329231,
+  "settingInProgress": 0,
+  "archiveNow": 0,
+  "linkQuality": {
+    "action": "reading",
+    "type": "scalar",
+    "value": 49,
+    "unit": "/70",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": 30,
+        "low": 40,
+        "high": 71,
+        "hihi": 80
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "signalLevel": {
+    "action": "reading",
+    "type": "scalar",
+    "value": -61,
+    "unit": "dBm",
+    "alarm": {
+      "value": 1,
+      "limits": {
+        "lolo": -70,
+        "low": -60,
+        "high": 0,
+        "hihi": 30
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "irCount": {
+    "action": "reading",
+    "type": "scalar",
+    "value": 0,
+    "unit": "unit",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": -2,
+        "low": -1,
+        "high": 4294967295,
+        "hihi": 4294967295
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "countTimeStamp": {
+    "action": "reading",
+    "type": "scalar",
+    "value": 0,
+    "unit": "unit",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": -2,
+        "low": -1,
+        "high": 2000000000000,
+        "hihi": 2000000000000
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "ehourCost": {
+    "action": "reading",
+    "type": "scalar",
+    "value": 0.0,
+    "unit": "SEK",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": -2,
+        "low": -1,
+        "high": 10,
+        "hihi": 10
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "hourEnergy": {
+    "action": "reading",
+    "type": "scalar",
+    "value": 0.0,
+    "unit": "kwH",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": -2,
+        "low": -1,
+        "high": 200,
+        "hihi": 200
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
+  "vbat": {
+    "action": "reading",
+    "type": "scalar",
+    "value": 4.81,
+    "unit": "Volts",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": -2,
+        "low": -1,
+        "high": 5.5,
+        "hihi": 5.6
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  }
+}

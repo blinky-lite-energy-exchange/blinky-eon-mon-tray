@@ -258,9 +258,9 @@
         "serialAsciiResponseStartDelimiter": "",
         "unit_id": "1",
         "commandDelay": "1",
-        "clientTimeout": "1000",
+        "clientTimeout": "6000",
         "reconnectOnTimeout": true,
-        "reconnectTimeout": "2000",
+        "reconnectTimeout": "10000",
         "parallelUnitIdsAllowed": false
     },
     {
@@ -477,7 +477,7 @@
         "type": "function",
         "z": "ce79ef46f01ee91a",
         "name": "Save device config in Memory",
-        "func": "msg.payload.settingInProgress = 1;\nflow.set('device', msg.payload);\nreturn msg;",
+        "func": "msg.payload.settingInProgress = 1;\nmsg.payload.archiveNow = 0;\nflow.set('device', msg.payload);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -737,25 +737,6 @@
         ]
     },
     {
-        "id": "c44e8a307e417ea3",
-        "type": "function",
-        "z": "ce79ef46f01ee91a",
-        "name": "Readings Alarm Scan",
-        "func": "if (!msg.payload) return null;\nvar device = flow.get('device');\ndevice.linkQuality.value     = global.get('linkQuality');\ndevice.signalLevel.value     = global.get('signalLevel');\nvar alarmFlagReading = scalarAlarmScan(device, 'reading');\nvar alarmFlagSetting = scalarAlarmScan(device, 'setting');\nvar newMsg = null;\nif (alarmFlagReading || alarmFlagSetting)\n{\n    newMsg = \n    {\n        topic: 'alarm',\n        payload: true\n    }\n}\nreturn newMsg;\n\nfunction getActionArray(device, type, actionType)\n{\n    var actionArray = [];\n    var keys = Object.keys(device);\n    for (var ii = 0; ii < keys.length; ++ii)\n    {\n        if (device[keys[ii]].hasOwnProperty('type'))\n        {\n            if (device[keys[ii]].type == type)\n            {\n                if (device[keys[ii]].action == actionType)\n                {\n                    actionArray.push(device[keys[ii]]);\n                }\n            }\n        }\n    }\n    return actionArray;\n}\nfunction scalarAlarmScan(device, actionType)\n{\n    var alarmFlag = false;\n    var actionArray = getActionArray(device, 'scalar', actionType);\n    if (actionArray.length > 0)\n    {\n        for (var ii = 0; ii < actionArray.length; ++ii)\n        {\n            actionArray[ii].alarm.value = 0;\n            if (!isNaN(actionArray[ii].value))\n            {\n                if (actionArray[ii].value <= actionArray[ii].alarm.limits.low)  actionArray[ii].alarm.value = 1;\n                if (actionArray[ii].value <= actionArray[ii].alarm.limits.lolo) actionArray[ii].alarm.value = 3;\n                if (actionArray[ii].value >= actionArray[ii].alarm.limits.high) actionArray[ii].alarm.value = 2;\n                if (actionArray[ii].value >= actionArray[ii].alarm.limits.hihi) actionArray[ii].alarm.value = 4;\n            }\n            if (actionArray[ii].alarm.value > 0)  alarmFlag = true\n        }\n    }\n    return alarmFlag;\n}\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 900,
-        "y": 640,
-        "wires": [
-            [
-                "d0f2dcf717dec57d"
-            ]
-        ]
-    },
-    {
         "id": "dfb8a6f09ed18976",
         "type": "function",
         "z": "ce79ef46f01ee91a",
@@ -778,17 +759,18 @@
         "type": "function",
         "z": "ce79ef46f01ee91a",
         "name": "Create Readings",
-        "func": "var device = flow.get('device');\nvar restartModbusMsg = null;\nif (device.settingInProgress < 0)\n{\n    device.settingInProgress = 0;\n    restartModbusMsg = {topic:'restartModbus', payload:true};\n    node.warn('Restart Modbus complete');\n}\nif (device.archiveNow > 0) return [null,null,null];\nvar initCube                        = msg.payload.data[0];\n\ndevice.power.value                  = Math.round(1.414 * 48000 * msg.payload.data[2] / msg.payload.data[1]) / 10;\ndevice.current.value                = Math.round(1.414 * 20000.0 * msg.payload.data[2] / msg.payload.data[1]) / 1000;\ndevice.adcSampleRate.value          = msg.payload.data[3] / 1000;\ndevice.nsamples.value               = msg.payload.data[4];\ndevice.nfilter.value                = msg.payload.data[5];\ndevice.powerOn.value                = msg.payload.data[6];\n\nvar now = new Date();\nif (device.powerOn.value == 0)\n{\n    var espotPrice = flow.get('espotPrice').futurePrice.value;\n    device.nextDayCostAvailable.value = 0;\n    if (espotPrice[0].length >= 23) device.nextDayCostAvailable.value = 1;\n    var lastMidnightDate = new Date(now.getTime());\n    lastMidnightDate.setHours(0)\n    lastMidnightDate.setMinutes(0);\n    lastMidnightDate.setSeconds(0);\n    lastMidnightDate.setMilliseconds(0);\n    var comingMidnightDate = new Date(lastMidnightDate.getTime());\n    comingMidnightDate.setHours(24);\n    \n    var startSearchDate = new Date(comingMidnightDate.getTime());\n    startSearchDate.setMinutes(device.startCostSearchTime.value);\n    if (device.startCostSearchTime.value > device.stopCostSearchTime.value)\n    {\n        startSearchDate = new Date(lastMidnightDate.getTime());\n        startSearchDate.setMinutes(device.startCostSearchTime.value);\n    }\n\n    var stopSearchDate = new Date(comingMidnightDate.getTime());\n    stopSearchDate.setMinutes(device.stopCostSearchTime.value);\n    \n    var searchDuration = Math.round((stopSearchDate.getTime() - startSearchDate.getTime()) / 60000);\n    if (device.costDuration.value > searchDuration) device.costDuration.value = searchDuration;\n    if (now.getTime() < startSearchDate.getTime())\n    {\n        if (stopSearchDate.getTime() < (espotPrice[0][espotPrice[0].length - 1] + 3540000) )\n        {\n            var hourIndexStart = 0;\n            while ((startSearchDate.getTime() > espotPrice[0][hourIndexStart]) && (hourIndexStart < espotPrice[0].length) )\n            {\n                hourIndexStart = hourIndexStart + 1\n            }\n            hourIndexStart = hourIndexStart - 1;\n            var numDurationHrs = Math.ceil(device.costDuration.value / 60);\n            var hourIndexStop = hourIndexStart + numDurationHrs - 1;\n            var minCostAvg = 10000000;\n            var minCostStartIndex = hourIndexStart;\n\n            while (espotPrice[0][hourIndexStop + 1] < stopSearchDate.getTime())\n            {\n                var costAvg = 0;\n                for (var ic = hourIndexStart; ic <= hourIndexStop; ++ ic) costAvg = costAvg + espotPrice[1][ic];\n                costAvg = costAvg / numDurationHrs;\n                if (costAvg < minCostAvg)\n                {\n                    minCostAvg = costAvg;\n                    minCostStartIndex = hourIndexStart;\n                }\n                hourIndexStart = hourIndexStart + 1;\n                hourIndexStop = hourIndexStart + numDurationHrs - 1;\n            }\n            var startCostTime = espotPrice[0][minCostStartIndex];\n            var stopCostTime = startCostTime + device.costDuration.value * 60 * 1000;\n            var avgCost = Math.round(1000 * minCostAvg) / 1000;\n            device.startCostTime.value = startCostTime;\n            device.stopCostTime.value = stopCostTime;\n            device.avgDurationCost.value = avgCost; \n            \n        }\n    }\n}\n\nvar initCubeMsg = null;\nif (initCube == 1)\n{\n    initCubeMsg = {topic:\"initCube\",payload:true};\n    device.settingInProgress = 1;\n}\nreturn  [{topic:'newSettingDone', payload:true},initCubeMsg, restartModbusMsg];\n",
+        "func": "var initCube = msg.payload.data[0];\nvar device = flow.get('device');\nvar restartModbusMsg = null;\nif (device.settingInProgress < 0)\n{\n    device.settingInProgress = 0;\n    restartModbusMsg = {topic:'restartModbus', payload:true};\n    node.warn('Restart Modbus complete');\n}\nvar dataView     = new DataView(new ArrayBuffer(24));\ndataView.setUint8(0, msg.payload.buffer[6]);\ndataView.setUint8(1, msg.payload.buffer[7]);\ndataView.setUint8(2, msg.payload.buffer[4]);\ndataView.setUint8(3, msg.payload.buffer[5]);\ndevice.irCount.value = dataView.getUint32(0);\nvar lastIrCount = context.get('lastIrCount');\nif ((initCube == 1) || (lastIrCount < 0) || (lastIrCount > device.irCount.value) ) lastIrCount = device.irCount.value;\ndevice.hourEnergy.value = (device.irCount.value - lastIrCount) / 1000;\ncontext.set('lastIrCount',device.irCount.value);\n\ndevice.ehourCost.value = Math.round(100 * flow.get('eprice') * device.hourEnergy.value) / 100;\ndevice.vbat.value = Math.round(100 * 2.0 * 3.3* msg.payload.data[1] / 1024) / 100;\nvar now = new Date();\nnow.setMilliseconds(0);\nnow.setSeconds(0);\nnow.setMinutes(0);\ndevice.countTimeStamp.value = now.getTime();\ndevice.timeStamp = device.countTimeStamp.value;\ndevice.archiveNow = 1;\nnode.warn(device.irCount.value.toString() + ' ' + device.hourEnergy.value.toString() + ' ' + device.ehourCost.value.toString() + ' ' + device.vbat.value.toString());\nvar initCubeMsg = null;\nif (initCube == 1)\n{\n    initCubeMsg = {topic:\"initCube\",payload:true};\n    device.settingInProgress = 1;\n}\nreturn  [{topic:'newSettingDone', payload:true}, initCubeMsg, restartModbusMsg];\n",
         "outputs": 3,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\ncontext.set('lastIrCount',-1);",
         "finalize": "",
         "libs": [],
         "x": 690,
-        "y": 640,
+        "y": 660,
         "wires": [
             [
-                "c44e8a307e417ea3"
+                "61c2ee12fae9cbf1",
+                "20fe21048e9b9b39"
             ],
             [
                 "74c6d394f2452a62",
@@ -826,14 +808,14 @@
                 "vt": "str"
             }
         ],
-        "repeat": "2",
-        "crontab": "",
-        "once": true,
+        "repeat": "",
+        "crontab": "0 0-23 * * *",
+        "once": false,
         "onceDelay": "15",
         "topic": "readTable",
         "payloadType": "date",
         "x": 130,
-        "y": 640,
+        "y": 660,
         "wires": [
             [
                 "e7e361e5afc232d7"
@@ -855,12 +837,10 @@
         "emptyMsgOnFail": false,
         "keepMsgProperties": false,
         "x": 500,
-        "y": 640,
+        "y": 660,
         "wires": [
             [],
-            [
-                "94dddf198fbea2df"
-            ]
+            []
         ]
     },
     {
@@ -868,7 +848,7 @@
         "type": "function",
         "z": "ce79ef46f01ee91a",
         "name": "Create Setting",
-        "func": "var device = flow.get('device');\nvar modbusSettingMsg = \n{\n    topic : msg.topic, \n    payload : { value: msg.payload.value, 'fc': 0x6, 'unitid': 1, 'address': -1 , 'quantity': 1 } \n}\nvar modbusMessage = false;\nswitch(msg.payload.attr)\n{\n    case 'nsamples':\n        modbusSettingMsg.payload.address = 4;\n        modbusMessage = true;\n        break;\n    case 'nfilter':\n        modbusSettingMsg.payload.address = 5;\n        modbusMessage = true;\n        break;\n    case 'powerOn':\n        modbusSettingMsg.payload.address = 6;\n        modbusMessage = true;\n        break;\n    case 'opState':\n        device.opState.value  = msg.payload.value;\n        modbusMessage = false;\n        break;\n    case 'startScheduleTime':\n        device.startScheduleTime.value  = msg.payload.value;\n        modbusMessage = false;\n        break;\n    case 'stopScheduleTime':\n        device.stopScheduleTime.value  = msg.payload.value;\n        modbusMessage = false;\n        break;\n    case 'startCostSearchTime':\n        device.startCostSearchTime.value  = msg.payload.value;\n        modbusMessage = false;\n        break;\n    case 'stopCostSearchTime':\n        device.stopCostSearchTime.value  = msg.payload.value;\n        modbusMessage = false;\n        break;\n    case 'costDuration':\n        device.costDuration.value  = msg.payload.value;\n        modbusMessage = false;\n        break;\n    default:\n        break;\n}\nvar msgArray = [null,null,null];\nif (modbusMessage)\n{\n    device.settingInProgress = 1;\n    var settingInProgressMsg = {topic:'settingInProgress', payload:true};\n    msgArray = [modbusSettingMsg, settingInProgressMsg, null];\n    \n}\nelse\n{\n    device.settingInProgress = 0;\n    msgArray = [null,null,{topic:'settingDone', payload:true}];\n}\nreturn msgArray;",
+        "func": "var device = flow.get('device');\nvar modbusSettingMsg = \n{\n    topic : msg.topic, \n    payload : { value: msg.payload.value, 'fc': 0x6, 'unitid': 1, 'address': -1 , 'quantity': 1 } \n}\nvar modbusMessage = false;\nswitch(msg.payload.attr)\n{\n    case 'test':\n        device.test.value  = msg.payload.value;\n        modbusMessage = false;\n        break;\n    default:\n        break;\n}\nvar msgArray = [null,null,null];\nif (modbusMessage)\n{\n    device.settingInProgress = 1;\n    var settingInProgressMsg = {topic:'settingInProgress', payload:true};\n    msgArray = [modbusSettingMsg, settingInProgressMsg, null];\n    \n}\nelse\n{\n    device.settingInProgress = 0;\n    msgArray = [null,null,{topic:'settingDone', payload:true}];\n}\nreturn msgArray;",
         "outputs": 3,
         "noerr": 0,
         "initialize": "",
@@ -1107,14 +1087,14 @@
         "type": "function",
         "z": "ce79ef46f01ee91a",
         "name": "Read Modbus",
-        "func": "if (flow.get('device').settingInProgress == 1) return null;\nvar modeBusCommand = { 'fc': 0x3, 'unitid': 1, 'address': 0 , 'quantity': 7 } ;\nreturn {topic: \"readStatus\", payload:modeBusCommand};\n",
+        "func": "if (flow.get('device').settingInProgress == 1) return null;\nvar modeBusCommand = { 'fc': 0x3, 'unitid': 1, 'address': 0 , 'quantity': 4 } ;\nreturn {topic: \"readStatus\", payload:modeBusCommand};\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 320,
-        "y": 640,
+        "y": 660,
         "wires": [
             [
                 "dfd383f6b74e0cdf"
@@ -1137,7 +1117,7 @@
         "wires": [
             [
                 "dfb8a6f09ed18976",
-                "2b730378156b040d"
+                "5eec44615361be25"
             ]
         ]
     },
@@ -1174,7 +1154,7 @@
         "links": [
             "2150949730b4ba06"
         ],
-        "x": 1235,
+        "x": 1275,
         "y": 640,
         "wires": []
     },
@@ -1207,7 +1187,7 @@
         "type": "function",
         "z": "ce79ef46f01ee91a",
         "name": "Init cube",
-        "func": "var device = flow.get('device');\ndevice.powerOn.value = 0;\nvar msgs = [];\nvar initCube = 0;\nmsgs[0] = { value: device.nsamples.value,               'fc': 0x6, 'unitid': 1, 'address': 4 , 'quantity': 1 };\nmsgs[1] = { value: device.nfilter.value,                'fc': 0x6, 'unitid': 1, 'address': 5 , 'quantity': 1 };\nmsgs[2] = { value: device.powerOn.value,                'fc': 0x6, 'unitid': 1, 'address': 6 , 'quantity': 1 };\n//must be the last!\nmsgs[3] = { value: initCube,                            'fc': 0x6, 'unitid': 1, 'address': 0 , 'quantity': 1 };\nreturn {topic : 'initCube', payload: msgs};",
+        "func": "var device = flow.get('device');\nvar msgs = [];\nvar initCube = 0;\n//msgs[0] = { value: device.nsamples.value,               'fc': 0x6, 'unitid': 1, 'address': 4 , 'quantity': 1 };\n//msgs[1] = { value: device.nfilter.value,                'fc': 0x6, 'unitid': 1, 'address': 5 , 'quantity': 1 };\n//msgs[2] = { value: device.powerOn.value,                'fc': 0x6, 'unitid': 1, 'address': 6 , 'quantity': 1 };\n//must be the last!\nmsgs[0] = { value: initCube,                            'fc': 0x6, 'unitid': 1, 'address': 0 , 'quantity': 1 };\nreturn {topic : 'initCube', payload: msgs};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1490,90 +1470,6 @@
         "wires": []
     },
     {
-        "id": "d0f2dcf717dec57d",
-        "type": "delay",
-        "z": "ce79ef46f01ee91a",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "5",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": true,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 1120,
-        "y": 640,
-        "wires": [
-            [
-                "20fe21048e9b9b39"
-            ]
-        ]
-    },
-    {
-        "id": "e72bfb2a3709d790",
-        "type": "inject",
-        "z": "ce79ef46f01ee91a",
-        "name": "Archive clock",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "1",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "8",
-        "topic": "archiveClock",
-        "payloadType": "date",
-        "x": 140,
-        "y": 780,
-        "wires": [
-            [
-                "227a5578c26204a9"
-            ]
-        ]
-    },
-    {
-        "id": "227a5578c26204a9",
-        "type": "function",
-        "z": "ce79ef46f01ee91a",
-        "name": "Archive Pulse",
-        "func": "var device = flow.get('device');\nvar lastArchive = context.get('lastArchive');\nvar now = new Date().getTime();\nif ((now - lastArchive) <= device.arcPeriod) return null;\ncontext.set('lastArchive', now);\nreturn {topic:'archivePulse', payload:true};",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "// Code added here will be run once\n// whenever the node is started.\ncontext.set('lastArchive', new Date().getTime());",
-        "finalize": "",
-        "libs": [],
-        "x": 350,
-        "y": 780,
-        "wires": [
-            [
-                "2728624acd3a5537"
-            ]
-        ]
-    },
-    {
-        "id": "2728624acd3a5537",
-        "type": "link out",
-        "z": "ce79ef46f01ee91a",
-        "name": "Archive Pulse Out",
-        "links": [
-            "2150949730b4ba06"
-        ],
-        "x": 475,
-        "y": 780,
-        "wires": []
-    },
-    {
         "id": "661b575f3eb57a5f",
         "type": "link out",
         "z": "ce79ef46f01ee91a",
@@ -1615,115 +1511,6 @@
         "wires": []
     },
     {
-        "id": "a8095950c784cec6",
-        "type": "inject",
-        "z": "ce79ef46f01ee91a",
-        "name": "Archive now",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "archiveNow",
-        "payloadType": "date",
-        "x": 130,
-        "y": 840,
-        "wires": [
-            [
-                "7f0a00602991e721"
-            ]
-        ]
-    },
-    {
-        "id": "7f0a00602991e721",
-        "type": "function",
-        "z": "ce79ef46f01ee91a",
-        "name": "Single Archive Pulse",
-        "func": "var device = flow.get('device');\ndevice.archiveNow = 1;\nreturn {topic:'archivePulse', payload:true};",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "// Code added here will be run once\n// whenever the node is started.\ncontext.set('lastArchive', new Date().getTime());",
-        "finalize": "",
-        "libs": [],
-        "x": 330,
-        "y": 840,
-        "wires": [
-            [
-                "2728624acd3a5537"
-            ]
-        ]
-    },
-    {
-        "id": "2b730378156b040d",
-        "type": "function",
-        "z": "ce79ef46f01ee91a",
-        "name": "Check ArchiveNow",
-        "func": "var device = flow.get(\"device\");\nvar resetArchiveNowMsg = null;\nif (device.archiveNow > 0) resetArchiveNowMsg = {topic:\"resetArchiveNow\", payload:true};\nreturn [msg,resetArchiveNowMsg];",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1250,
-        "y": 180,
-        "wires": [
-            [
-                "5eec44615361be25"
-            ],
-            [
-                "86342bd64d4aed59"
-            ]
-        ]
-    },
-    {
-        "id": "86342bd64d4aed59",
-        "type": "delay",
-        "z": "ce79ef46f01ee91a",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "1",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 1490,
-        "y": 240,
-        "wires": [
-            [
-                "34c3e2a42c09ea88"
-            ]
-        ]
-    },
-    {
-        "id": "34c3e2a42c09ea88",
-        "type": "function",
-        "z": "ce79ef46f01ee91a",
-        "name": "Reset ArchiveNow",
-        "func": "flow.get(\"device\").archiveNow = 0;\n",
-        "outputs": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1670,
-        "y": 240,
-        "wires": []
-    },
-    {
         "id": "dbab599e598d3f01",
         "type": "mqtt in",
         "z": "ce79ef46f01ee91a",
@@ -1755,7 +1542,7 @@
         "correl": "",
         "expiry": "",
         "broker": "cf9f84d0.6fba78",
-        "x": 1490,
+        "x": 1250,
         "y": 180,
         "wires": []
     },
@@ -1776,8 +1563,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 880,
-        "y": 760,
+        "x": 980,
+        "y": 680,
         "wires": [
             [
                 "9ecac5e72feeaa9c"
@@ -1793,8 +1580,8 @@
         "links": [
             "2150949730b4ba06"
         ],
-        "x": 835,
-        "y": 700,
+        "x": 715,
+        "y": 760,
         "wires": []
     },
     {
@@ -1822,8 +1609,8 @@
         "links": [
             "5aebb0b38ba2e191"
         ],
-        "x": 1175,
-        "y": 760,
+        "x": 1295,
+        "y": 680,
         "wires": []
     },
     {
@@ -1854,8 +1641,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1050,
-        "y": 760,
+        "x": 1150,
+        "y": 680,
         "wires": [
             [
                 "961b85c2472cee35"
@@ -1907,7 +1694,7 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1470,
+        "x": 1450,
         "y": 500,
         "wires": []
     },
@@ -1934,14 +1721,14 @@
         "id": "562261a5697b77c0",
         "type": "function",
         "z": "ce79ef46f01ee91a",
-        "name": "Modbus Set dail",
+        "name": "Modbus Set bad setting",
         "func": "flow.get(\"device\").settingInProgress = -1;\nreturn null",
         "outputs": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1460,
+        "x": 1490,
         "y": 440,
         "wires": []
     },
@@ -1951,7 +1738,7 @@
         "z": "ce79ef46f01ee91a",
         "name": "",
         "pauseType": "delay",
-        "timeout": "20",
+        "timeout": "5",
         "timeoutUnits": "seconds",
         "rate": "1",
         "nbRateUnits": "1",
@@ -1969,71 +1756,6 @@
                 "04fec5b44db8b4da"
             ]
         ]
-    },
-    {
-        "id": "226b913bc77a9292",
-        "type": "inject",
-        "z": "ce79ef46f01ee91a",
-        "name": "Init + 4 sec",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "4",
-        "topic": "",
-        "payloadType": "date",
-        "x": 130,
-        "y": 1140,
-        "wires": [
-            [
-                "d7a74c6aa1a14e87"
-            ]
-        ]
-    },
-    {
-        "id": "d7a74c6aa1a14e87",
-        "type": "exec",
-        "z": "ce79ef46f01ee91a",
-        "command": "cat /etc/timezone",
-        "addpay": false,
-        "append": "",
-        "useSpawn": "false",
-        "timer": "",
-        "winHide": false,
-        "oldrc": false,
-        "name": "get timezone",
-        "x": 290,
-        "y": 1140,
-        "wires": [
-            [
-                "6aa621b3a8db62c4"
-            ],
-            [],
-            []
-        ]
-    },
-    {
-        "id": "6aa621b3a8db62c4",
-        "type": "function",
-        "z": "ce79ef46f01ee91a",
-        "name": "Save Timezone",
-        "func": "flow.get('device').timezone.value = msg.payload.split('\\n')[0];\nreturn msg;",
-        "outputs": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 480,
-        "y": 1140,
-        "wires": []
     },
     {
         "id": "83f6e075.50977",
@@ -2070,7 +1792,7 @@
         "z": "ce79ef46f01ee91a",
         "name": "",
         "pauseType": "delay",
-        "timeout": "4",
+        "timeout": "10",
         "timeoutUnits": "minutes",
         "rate": "1",
         "nbRateUnits": "1",
@@ -2081,12 +1803,11 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 280,
+        "x": 290,
         "y": 1300,
         "wires": [
             [
-                "bb6ef20619e92fb7",
-                "61c2ee12fae9cbf1"
+                "bb6ef20619e92fb7"
             ]
         ]
     },
@@ -2139,7 +1860,7 @@
         "type": "function",
         "z": "ce79ef46f01ee91a",
         "name": "Save espotPrice",
-        "func": "flow.set('espotPrice',msg.payload)\nreturn msg;",
+        "func": "flow.set('eprice',msg.payload.price.value);\nreturn msg;",
         "outputs": 0,
         "noerr": 0,
         "initialize": "",
@@ -2189,133 +1910,21 @@
         ]
     },
     {
-        "id": "6ae4c86c195591a0",
-        "type": "inject",
-        "z": "ce79ef46f01ee91a",
-        "name": "every 5 secs",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "5",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "30",
-        "topic": "",
-        "payloadType": "date",
-        "x": 140,
-        "y": 1600,
-        "wires": [
-            [
-                "5ff21ec231ed8483"
-            ]
-        ]
-    },
-    {
-        "id": "5ff21ec231ed8483",
-        "type": "switch",
-        "z": "ce79ef46f01ee91a",
-        "name": "",
-        "property": "device.opState.value",
-        "propertyType": "flow",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "1",
-                "vt": "num"
-            },
-            {
-                "t": "eq",
-                "v": "2",
-                "vt": "num"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 2,
-        "x": 310,
-        "y": 1600,
-        "wires": [
-            [
-                "19b4496d91529cb8"
-            ],
-            [
-                "6796de50f87b2817"
-            ]
-        ]
-    },
-    {
-        "id": "19b4496d91529cb8",
-        "type": "function",
-        "z": "ce79ef46f01ee91a",
-        "name": "Schedule Relay Control",
-        "func": "var device = flow.get('device');\nif (device.settingInProgress != 0) return null;\nvar now = new Date();\nvar minutes = now.getHours() * 60 + now.getMinutes();\nvar powerOn = 0;\nif (device.startScheduleTime.value > device.stopScheduleTime.value)\n{\n    if ((device.startScheduleTime.value <= minutes) && (minutes <= 1440) ) powerOn = 1;\n    if ((0 <= minutes) && (minutes < device.stopScheduleTime.value) )     powerOn = 1;\n}\nelse\n{\n    if ((device.startScheduleTime.value <= minutes) && (minutes < device.stopScheduleTime.value) ) powerOn = 1;\n}\nif (powerOn ==  device.powerOn.value) return null;\nreturn {topic : \"setting\", payload : {attr :\"powerOn\", value: powerOn} };",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 520,
-        "y": 1600,
-        "wires": [
-            [
-                "8e4c017e68b2e16b"
-            ]
-        ]
-    },
-    {
-        "id": "8e4c017e68b2e16b",
-        "type": "link out",
-        "z": "ce79ef46f01ee91a",
-        "name": "Schedule Relay Control Out",
-        "mode": "link",
-        "links": [
-            "706d51cc29f8cf61"
-        ],
-        "x": 675,
-        "y": 1640,
-        "wires": []
-    },
-    {
-        "id": "6796de50f87b2817",
-        "type": "function",
-        "z": "ce79ef46f01ee91a",
-        "name": "Cost Relay Control",
-        "func": "var device = flow.get('device');\nif (device.settingInProgress != 0) return null;\nvar now = new Date();\nvar powerOn = 0;\nif ((device.startCostTime.value < now.getTime())  && (now.getTime() < device.stopCostTime.value) ) powerOn = 1;\nif (powerOn ==  device.powerOn.value) return null;\nreturn {topic : \"setting\", payload : {attr :\"powerOn\", value: powerOn} };",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 510,
-        "y": 1660,
-        "wires": [
-            [
-                "8e4c017e68b2e16b"
-            ]
-        ]
-    },
-    {
         "id": "cc87e48c94a822d4",
         "type": "function",
         "z": "ce79ef46f01ee91a",
-        "name": "Write to file",
-        "func": "return {topic:'newPriceReading', payload:true};\nreturn msg;",
+        "name": "ArchiveNow to 0 ",
+        "func": "flow.get('device').archiveNow = 0;\nreturn {topic:'newPriceReading', payload:true};\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 590,
-        "y": 1300,
+        "x": 1040,
+        "y": 580,
         "wires": [
             [
-                "cf75d205fd484043"
+                "20fe21048e9b9b39"
             ]
         ]
     },
@@ -2325,7 +1934,7 @@
         "z": "ce79ef46f01ee91a",
         "name": "",
         "pauseType": "delay",
-        "timeout": "2",
+        "timeout": "1",
         "timeoutUnits": "minutes",
         "rate": "1",
         "nbRateUnits": "1",
@@ -2336,26 +1945,13 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 440,
-        "y": 1300,
+        "x": 880,
+        "y": 580,
         "wires": [
             [
                 "cc87e48c94a822d4"
             ]
         ]
-    },
-    {
-        "id": "cf75d205fd484043",
-        "type": "link out",
-        "z": "ce79ef46f01ee91a",
-        "name": "Delay after spot price Ping",
-        "mode": "link",
-        "links": [
-            "52c3ee5d26adffbe"
-        ],
-        "x": 695,
-        "y": 1300,
-        "wires": []
     },
     {
         "id": "68f91193.6031a",
