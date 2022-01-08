@@ -238,30 +238,23 @@
         "wholemsg": "false"
     },
     {
-        "id": "9bf2bda7e005d087",
-        "type": "modbus-client",
-        "name": "Cube",
-        "clienttype": "simpleser",
-        "bufferCommands": false,
-        "stateLogEnabled": false,
-        "queueLogEnabled": false,
-        "tcpHost": "${SLAVEIP}",
-        "tcpPort": "${SLAVEPORT}",
-        "tcpType": "DEFAULT",
-        "serialPort": "$(SERIALPORT)",
-        "serialType": "RTU-BUFFERD",
-        "serialBaudrate": "9600",
-        "serialDatabits": "8",
-        "serialStopbits": "1",
-        "serialParity": "none",
-        "serialConnectionDelay": "100",
-        "serialAsciiResponseStartDelimiter": "",
-        "unit_id": "1",
-        "commandDelay": "1",
-        "clientTimeout": "6000",
-        "reconnectOnTimeout": true,
-        "reconnectTimeout": "10000",
-        "parallelUnitIdsAllowed": false
+        "id": "ceb6cfe73743e15f",
+        "type": "serial-port",
+        "serialport": "$(SERIALPORT)",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "64",
+        "bin": "bin",
+        "out": "count",
+        "addchar": "",
+        "responsetimeout": "10000"
     },
     {
         "id": "c104210d.418eb",
@@ -477,7 +470,7 @@
         "type": "function",
         "z": "ce79ef46f01ee91a",
         "name": "Save device config in Memory",
-        "func": "msg.payload.settingInProgress = 1;\nmsg.payload.archiveNow = 0;\nflow.set('device', msg.payload);\nreturn msg;",
+        "func": "msg.payload.settingInProgress = 0;\nmsg.payload.archiveNow = 0;\nflow.set('device', msg.payload);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -487,7 +480,7 @@
         "y": 60,
         "wires": [
             [
-                "3779e6db85af1353"
+                "9ee8274de1b14f50"
             ]
         ]
     },
@@ -652,7 +645,7 @@
         "oldrc": false,
         "name": "Restart",
         "x": 500,
-        "y": 960,
+        "y": 1100,
         "wires": [
             [],
             [],
@@ -682,7 +675,7 @@
         "repair": false,
         "outputs": 2,
         "x": 310,
-        "y": 980,
+        "y": 1120,
         "wires": [
             [
                 "59f0086d1e50fb2a"
@@ -704,7 +697,7 @@
         "oldrc": false,
         "name": "Reboot",
         "x": 500,
-        "y": 1020,
+        "y": 1160,
         "wires": [
             [],
             [],
@@ -729,7 +722,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 160,
-        "y": 980,
+        "y": 1120,
         "wires": [
             [
                 "dcaeb5f28d993109"
@@ -759,25 +752,18 @@
         "type": "function",
         "z": "ce79ef46f01ee91a",
         "name": "Create Readings",
-        "func": "var initCube = msg.payload.data[0];\nvar device = flow.get('device');\nvar restartModbusMsg = null;\nif (device.settingInProgress < 0)\n{\n    device.settingInProgress = 0;\n    restartModbusMsg = {topic:'restartModbus', payload:true};\n    node.warn('Restart Modbus complete');\n}\nvar dataView     = new DataView(new ArrayBuffer(24));\ndataView.setUint8(0, msg.payload.buffer[6]);\ndataView.setUint8(1, msg.payload.buffer[7]);\ndataView.setUint8(2, msg.payload.buffer[4]);\ndataView.setUint8(3, msg.payload.buffer[5]);\ndevice.irCount.value = dataView.getUint32(0);\nvar lastIrCount = context.get('lastIrCount');\nif ((initCube == 1) || (lastIrCount < 0) || (lastIrCount > device.irCount.value) ) lastIrCount = device.irCount.value;\ndevice.hourEnergy.value = (device.irCount.value - lastIrCount) / 1000;\ncontext.set('lastIrCount',device.irCount.value);\n\ndevice.ehourCost.value = Math.round(100 * flow.get('eprice') * device.hourEnergy.value) / 100;\ndevice.vbat.value = Math.round(100 * 2.0 * 3.3* msg.payload.data[1] / 1024) / 100;\nvar now = new Date();\nnow.setMilliseconds(0);\nnow.setSeconds(0);\nnow.setMinutes(0);\ndevice.countTimeStamp.value = now.getTime();\ndevice.timeStamp = device.countTimeStamp.value;\ndevice.archiveNow = 1;\nnode.warn(device.irCount.value.toString() + ' ' + device.hourEnergy.value.toString() + ' ' + device.ehourCost.value.toString() + ' ' + device.vbat.value.toString());\nvar initCubeMsg = null;\nif (initCube == 1)\n{\n    initCubeMsg = {topic:\"initCube\",payload:true};\n    device.settingInProgress = 1;\n}\nreturn  [{topic:'newSettingDone', payload:true}, initCubeMsg, restartModbusMsg];\n",
-        "outputs": 3,
+        "func": "var device = flow.get('device');\nvar dataView     = new DataView(new ArrayBuffer(4));\n\nfor (ib = 0; ib < 4; ++ib)   dataView.setUint8(ib, msg.payload[0 * 4 + 3 - ib]);\ndevice.vbat.value = Math.round(100 * 2.0 * 3.3* dataView.getUint32(0) / 1024) / 100;\nfor (ib = 0; ib < 4; ++ib)   dataView.setUint8(ib, msg.payload[1 * 4 + 3 - ib]);\ndevice.irCount.value = dataView.getUint32(0);\n\nvar lastIrCount = context.get('lastIrCount');\nif ((lastIrCount < 0) || (lastIrCount > device.irCount.value) ) lastIrCount = device.irCount.value;\ndevice.hourEnergy.value = (device.irCount.value - lastIrCount) / 1000;\ncontext.set('lastIrCount',device.irCount.value);\n\ndevice.ehourCost.value = Math.round(100 * flow.get('eprice') * device.hourEnergy.value) / 100;\nvar now = new Date();\nnow.setMilliseconds(0);\nnow.setSeconds(0);\nnow.setMinutes(0);\ndevice.countTimeStamp.value = now.getTime();\ndevice.timeStamp = device.countTimeStamp.value;\ndevice.archiveNow = 1;\nnode.warn(device.irCount.value.toString() + ' ' + device.hourEnergy.value.toString() + ' ' + device.ehourCost.value.toString() + ' ' + device.vbat.value.toString());\nreturn  {topic:'newSettingDone', payload:true};\n",
+        "outputs": 1,
         "noerr": 0,
         "initialize": "// Code added here will be run once\n// whenever the node is started.\ncontext.set('lastIrCount',-1);",
         "finalize": "",
         "libs": [],
-        "x": 690,
+        "x": 990,
         "y": 660,
         "wires": [
             [
                 "61c2ee12fae9cbf1",
                 "20fe21048e9b9b39"
-            ],
-            [
-                "74c6d394f2452a62",
-                "f0c1e263384a520f"
-            ],
-            [
-                "f0c1e263384a520f"
             ]
         ]
     },
@@ -793,55 +779,6 @@
         "x": 1395,
         "y": 260,
         "wires": []
-    },
-    {
-        "id": "71ae80a656c00e15",
-        "type": "inject",
-        "z": "ce79ef46f01ee91a",
-        "name": "read Status",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "0 0-23 * * *",
-        "once": false,
-        "onceDelay": "15",
-        "topic": "readTable",
-        "payloadType": "date",
-        "x": 130,
-        "y": 660,
-        "wires": [
-            [
-                "e7e361e5afc232d7"
-            ]
-        ]
-    },
-    {
-        "id": "dfd383f6b74e0cdf",
-        "type": "modbus-flex-getter",
-        "z": "ce79ef46f01ee91a",
-        "name": "Modbus Read",
-        "showStatusActivities": true,
-        "showErrors": true,
-        "logIOActivities": false,
-        "server": "9bf2bda7e005d087",
-        "useIOFile": false,
-        "ioFile": "",
-        "useIOForPayload": false,
-        "emptyMsgOnFail": false,
-        "keepMsgProperties": false,
-        "x": 500,
-        "y": 660,
-        "wires": [
-            [],
-            []
-        ]
     },
     {
         "id": "feb0c9be3896e508",
@@ -865,25 +802,6 @@
             ],
             [
                 "8287f2bf4cdd395b"
-            ]
-        ]
-    },
-    {
-        "id": "26de5f73575775f7",
-        "type": "modbus-flex-write",
-        "z": "ce79ef46f01ee91a",
-        "name": "Modbus set",
-        "showStatusActivities": true,
-        "showErrors": true,
-        "server": "9bf2bda7e005d087",
-        "emptyMsgOnFail": false,
-        "keepMsgProperties": true,
-        "x": 530,
-        "y": 340,
-        "wires": [
-            [],
-            [
-                "06cee1a119575ed4"
             ]
         ]
     },
@@ -926,9 +844,7 @@
         "x": 370,
         "y": 340,
         "wires": [
-            [
-                "26de5f73575775f7"
-            ]
+            []
         ]
     },
     {
@@ -1083,25 +999,6 @@
         ]
     },
     {
-        "id": "e7e361e5afc232d7",
-        "type": "function",
-        "z": "ce79ef46f01ee91a",
-        "name": "Read Modbus",
-        "func": "if (flow.get('device').settingInProgress == 1) return null;\nvar modeBusCommand = { 'fc': 0x3, 'unitid': 1, 'address': 0 , 'quantity': 4 } ;\nreturn {topic: \"readStatus\", payload:modeBusCommand};\n",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 320,
-        "y": 660,
-        "wires": [
-            [
-                "dfd383f6b74e0cdf"
-            ]
-        ]
-    },
-    {
         "id": "13f60be205b89b7d",
         "type": "function",
         "z": "ce79ef46f01ee91a",
@@ -1154,8 +1051,8 @@
         "links": [
             "2150949730b4ba06"
         ],
-        "x": 1275,
-        "y": 640,
+        "x": 1475,
+        "y": 660,
         "wires": []
     },
     {
@@ -1181,88 +1078,6 @@
         "x": 315,
         "y": 380,
         "wires": []
-    },
-    {
-        "id": "04fec5b44db8b4da",
-        "type": "function",
-        "z": "ce79ef46f01ee91a",
-        "name": "Init cube",
-        "func": "var device = flow.get('device');\nvar msgs = [];\nvar initCube = 0;\n//msgs[0] = { value: device.nsamples.value,               'fc': 0x6, 'unitid': 1, 'address': 4 , 'quantity': 1 };\n//msgs[1] = { value: device.nfilter.value,                'fc': 0x6, 'unitid': 1, 'address': 5 , 'quantity': 1 };\n//msgs[2] = { value: device.powerOn.value,                'fc': 0x6, 'unitid': 1, 'address': 6 , 'quantity': 1 };\n//must be the last!\nmsgs[0] = { value: initCube,                            'fc': 0x6, 'unitid': 1, 'address': 0 , 'quantity': 1 };\nreturn {topic : 'initCube', payload: msgs};",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1200,
-        "y": 60,
-        "wires": [
-            [
-                "2134d3a9102ee7b8"
-            ]
-        ]
-    },
-    {
-        "id": "2134d3a9102ee7b8",
-        "type": "split",
-        "z": "ce79ef46f01ee91a",
-        "name": "",
-        "splt": "\\n",
-        "spltType": "str",
-        "arraySplt": 1,
-        "arraySpltType": "len",
-        "stream": false,
-        "addname": "",
-        "x": 1330,
-        "y": 60,
-        "wires": [
-            [
-                "e45b9b5f96ba6d73"
-            ]
-        ]
-    },
-    {
-        "id": "e45b9b5f96ba6d73",
-        "type": "delay",
-        "z": "ce79ef46f01ee91a",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 1480,
-        "y": 60,
-        "wires": [
-            [
-                "647f248407479387"
-            ]
-        ]
-    },
-    {
-        "id": "647f248407479387",
-        "type": "modbus-flex-write",
-        "z": "ce79ef46f01ee91a",
-        "name": "Modbus init",
-        "showStatusActivities": true,
-        "showErrors": true,
-        "server": "9bf2bda7e005d087",
-        "emptyMsgOnFail": false,
-        "keepMsgProperties": false,
-        "x": 1650,
-        "y": 60,
-        "wires": [
-            [],
-            [
-                "3c51c680e18abf95"
-            ]
-        ]
     },
     {
         "id": "765936897007ed33",
@@ -1490,7 +1305,7 @@
             "661b575f3eb57a5f"
         ],
         "x": 55,
-        "y": 980,
+        "y": 1120,
         "wires": [
             [
                 "7f81d57f1839a56a"
@@ -1547,44 +1362,6 @@
         "wires": []
     },
     {
-        "id": "74c6d394f2452a62",
-        "type": "delay",
-        "z": "ce79ef46f01ee91a",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "3",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 980,
-        "y": 680,
-        "wires": [
-            [
-                "9ecac5e72feeaa9c"
-            ]
-        ]
-    },
-    {
-        "id": "f0c1e263384a520f",
-        "type": "link out",
-        "z": "ce79ef46f01ee91a",
-        "name": "Start Init Cube",
-        "mode": "link",
-        "links": [
-            "2150949730b4ba06"
-        ],
-        "x": 715,
-        "y": 760,
-        "wires": []
-    },
-    {
         "id": "5aebb0b38ba2e191",
         "type": "link in",
         "z": "ce79ef46f01ee91a",
@@ -1597,163 +1374,6 @@
         "wires": [
             [
                 "c7d1bc1a67fe9dc2"
-            ]
-        ]
-    },
-    {
-        "id": "961b85c2472cee35",
-        "type": "link out",
-        "z": "ce79ef46f01ee91a",
-        "name": "begin re-init cube",
-        "mode": "link",
-        "links": [
-            "5aebb0b38ba2e191"
-        ],
-        "x": 1295,
-        "y": 680,
-        "wires": []
-    },
-    {
-        "id": "3c51c680e18abf95",
-        "type": "function",
-        "z": "ce79ef46f01ee91a",
-        "name": "Allow Readings",
-        "func": "if (msg.payload.address == 0) flow.get(\"device\").settingInProgress = 0;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1840,
-        "y": 60,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "9ecac5e72feeaa9c",
-        "type": "function",
-        "z": "ce79ef46f01ee91a",
-        "name": "Set input filename",
-        "func": "var deviceProps = flow.get('deviceProps');\nreturn {topic: 'readFile', 'filename':deviceProps.configFile};",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1150,
-        "y": 680,
-        "wires": [
-            [
-                "961b85c2472cee35"
-            ]
-        ]
-    },
-    {
-        "id": "bf552c02a1ddf527",
-        "type": "catch",
-        "z": "ce79ef46f01ee91a",
-        "name": "",
-        "scope": [
-            "647f248407479387"
-        ],
-        "uncaught": false,
-        "x": 1690,
-        "y": 120,
-        "wires": [
-            [
-                "b96374fabc58144c"
-            ]
-        ]
-    },
-    {
-        "id": "b96374fabc58144c",
-        "type": "function",
-        "z": "ce79ef46f01ee91a",
-        "name": "Modbus Init fail",
-        "func": "if (msg.payload.address == 0)\n{\n    flow.get(\"device\").settingInProgress = 0;\n}\nreturn msg;",
-        "outputs": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1860,
-        "y": 120,
-        "wires": []
-    },
-    {
-        "id": "de9bde626d76d559",
-        "type": "debug",
-        "z": "ce79ef46f01ee91a",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1450,
-        "y": 500,
-        "wires": []
-    },
-    {
-        "id": "254741da8f62583b",
-        "type": "catch",
-        "z": "ce79ef46f01ee91a",
-        "name": "",
-        "scope": [
-            "647f248407479387",
-            "26de5f73575775f7"
-        ],
-        "uncaught": false,
-        "x": 1270,
-        "y": 440,
-        "wires": [
-            [
-                "562261a5697b77c0",
-                "de9bde626d76d559"
-            ]
-        ]
-    },
-    {
-        "id": "562261a5697b77c0",
-        "type": "function",
-        "z": "ce79ef46f01ee91a",
-        "name": "Modbus Set bad setting",
-        "func": "flow.get(\"device\").settingInProgress = -1;\nreturn null",
-        "outputs": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1490,
-        "y": 440,
-        "wires": []
-    },
-    {
-        "id": "3779e6db85af1353",
-        "type": "delay",
-        "z": "ce79ef46f01ee91a",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 1060,
-        "y": 60,
-        "wires": [
-            [
-                "04fec5b44db8b4da"
             ]
         ]
     },
@@ -1920,7 +1540,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1040,
+        "x": 1320,
         "y": 580,
         "wires": [
             [
@@ -1945,13 +1565,184 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 880,
+        "x": 1160,
         "y": 580,
         "wires": [
             [
                 "cc87e48c94a822d4"
             ]
         ]
+    },
+    {
+        "id": "b0d58499a4cda4ad",
+        "type": "inject",
+        "z": "ce79ef46f01ee91a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "0 0-23 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 680,
+        "wires": [
+            [
+                "4072e28876dbc9df"
+            ]
+        ]
+    },
+    {
+        "id": "4072e28876dbc9df",
+        "type": "function",
+        "z": "ce79ef46f01ee91a",
+        "name": "Get Reading",
+        "func": "if (flow.get('device').settingInProgress == 1) return null;\nvar device = flow.get('device');\nvar bufsize = 64;\nvar buffer = new ArrayBuffer(bufsize);\nvar settingsView = new DataView(buffer);\nvar newSetting = 0;\nsettingsView.setInt32(0, newSetting, true);\nsettingsView.setInt32(4, bufsize, true);\nfor (var ii = 8; ii < bufsize; ++ii) settingsView.setUint8(ii, 0, true);\n\nreturn {topic:'settings',payload:Buffer.from(buffer)};\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 680,
+        "wires": [
+            [
+                "db9871719477dfb1"
+            ]
+        ]
+    },
+    {
+        "id": "795a16d6bbfec0c7",
+        "type": "link in",
+        "z": "ce79ef46f01ee91a",
+        "name": "New Setting in",
+        "links": [
+            "9ee8274de1b14f50",
+            "1ef8da82823d3d29"
+        ],
+        "x": 115,
+        "y": 740,
+        "wires": [
+            [
+                "656b0ae37f44a213"
+            ]
+        ]
+    },
+    {
+        "id": "9ee8274de1b14f50",
+        "type": "link out",
+        "z": "ce79ef46f01ee91a",
+        "name": "Init out",
+        "mode": "link",
+        "links": [
+            "795a16d6bbfec0c7"
+        ],
+        "x": 1035,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "db9871719477dfb1",
+        "type": "serial request",
+        "z": "ce79ef46f01ee91a",
+        "name": "",
+        "serial": "ceb6cfe73743e15f",
+        "x": 530,
+        "y": 680,
+        "wires": [
+            [
+                "1872e620ad5da4bc"
+            ]
+        ]
+    },
+    {
+        "id": "1872e620ad5da4bc",
+        "type": "function",
+        "z": "ce79ef46f01ee91a",
+        "name": "Read Serial Handshake",
+        "func": "if (flow.get('device') == undefined) return null;\nvar ib;\nvar device = flow.get('device');\nvar dataView     = new DataView(new ArrayBuffer(4));\nvar newSettingDone = 0;\nvar cubeInit = 0;\nvar checkSum = 0;\n\nfor (ib = 0; ib < 4; ++ib)   dataView.setUint8(ib, msg.payload[0 * 4 + 3 - ib]);\ncubeInit = dataView.getInt32(0);\nfor (ib = 0; ib < 4; ++ib)   dataView.setUint8(ib, msg.payload[1 * 4 + 3 - ib]);\nnewSettingDone = dataView.getInt32(0);\nfor (ib = 0; ib < 4; ++ib)   dataView.setUint8(ib, msg.payload[2 * 4 + 3 - ib]);\ncheckSum = dataView.getInt32(0);\nif (checkSum != msg.payload.length)\n{\n    node.warn(\"checkSum = \" + checkSum.toString());\n    return [null,null,{topic:'restartBluetooth',payload:true}];\n}\n\nvar newMsg = {topic:'userData', payload:[]};\nfor (var ii = 12; ii < msg.payload.length; ++ii) newMsg.payload[ii - 12] = msg.payload[ii];\n\nif (newSettingDone > 0) \n{\n    return [null,null,null];\n}\nif(cubeInit != 0) \n{\n    return [null,{topic:'loadSettings',payload:true},null];\n}\n\nreturn [newMsg,null,null];",
+        "outputs": 3,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 680,
+        "wires": [
+            [
+                "94dddf198fbea2df"
+            ],
+            [
+                "7b7135a393a3339e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "656b0ae37f44a213",
+        "type": "function",
+        "z": "ce79ef46f01ee91a",
+        "name": "New Setting",
+        "func": "var device = flow.get('device');\nvar bufsize = 64;\nvar buffer = new ArrayBuffer(bufsize);\nvar settingsView = new DataView(buffer);\nvar newSetting = 1;\nsettingsView.setInt32(0, newSetting, true);\nsettingsView.setInt32(4, bufsize, true);\nfor (var ii = 8; ii < bufsize; ++ii) settingsView.setUint8(ii, 0, true);\nreturn {topic:'settings',payload:Buffer.from(buffer)};\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 740,
+        "wires": [
+            [
+                "db9871719477dfb1"
+            ]
+        ]
+    },
+    {
+        "id": "7b7135a393a3339e",
+        "type": "delay",
+        "z": "ce79ef46f01ee91a",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 960,
+        "y": 700,
+        "wires": [
+            [
+                "1ef8da82823d3d29"
+            ]
+        ]
+    },
+    {
+        "id": "1ef8da82823d3d29",
+        "type": "link out",
+        "z": "ce79ef46f01ee91a",
+        "name": "cube init detected",
+        "mode": "link",
+        "links": [
+            "795a16d6bbfec0c7"
+        ],
+        "x": 1075,
+        "y": 720,
+        "wires": []
     },
     {
         "id": "68f91193.6031a",
