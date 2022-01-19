@@ -653,7 +653,7 @@
         "type": "function",
         "z": "52dab9565680d881",
         "name": "Create Readings",
-        "func": "var device = global.get('device');\nif (device.archiveNow > 0) return null;\nvar initCube             = msg.payload[0];\ndevice.vbat.value        = Math.round(100 * 2.0 * 3.3* msg.payload[1] / 1024) / 100;\n\n//eonCount is a uint_32 so extract it from the last two int16\nvar buffer = new ArrayBuffer(4);\nvar testView = new DataView(buffer);\ntestView.setInt16(0, msg.payload[2], true); \ntestView.setInt16(2, msg.payload[3], true); \nvar combBuff = Buffer.from(buffer);\nvar dataView = new DataView(new ArrayBuffer(4));\nfor (ib = 0; ib < 4; ++ib) dataView.setUint8(ib, combBuff[3 - ib]);\ndevice.eonCount.value = dataView.getUint32(0);\n\nvar lastEonCount = global.get('lastEonCount');\nif (lastEonCount == undefined) lastEonCount = -1;\nif ((lastEonCount < 0) || (lastEonCount > device.eonCount.value) ) lastEonCount = device.eonCount.value;\ndevice.hourEnergy.value = (device.eonCount.value - lastEonCount) / 1000;\nglobal.set('lastEonCount',device.eonCount.value);\n\ndevice.ehourCost.value = global.get('eprice') * device.hourEnergy.value;\nvar now = new Date();\nnow.setMilliseconds(0);\nnow.setSeconds(0);\nnow.setMinutes(0);\ndevice.countTimeStamp.value = now.getTime();\ndevice.timeStamp = device.countTimeStamp.value;\ndevice.archiveNow = 1;\nnode.warn(device.eonCount.value.toString() + ' ' + device.hourEnergy.value.toString() + ' ' + device.ehourCost.value.toFixed(6) + ' ' + device.vbat.value.toString());\n\nvar initCubeMsg = null;\nif (initCube == 1)\n{\n    initCubeMsg = {topic:\"initCube\",payload:true};\n    device.settingInProgress = 1;\n}\nreturn  [{topic:'newSettingDone', payload:true},initCubeMsg];\n",
+        "func": "var device = global.get('device');\nif (device.archiveNow > 0) return null;\n\nvar initCube             = msg.payload[0];\nvar initCubeMsg = null;\nif (initCube == 1)\n{\n    initCubeMsg = {topic:\"initCube\",payload:true};\n    device.settingInProgress = 1;\n    return  [null ,initCubeMsg];\n}\n\ndevice.vbat.value        = Math.round(100 * 2.0 * 3.3* msg.payload[1] / 1024) / 100;\n//eonCount is a uint_32 so extract it from the last two int16\nvar buffer = new ArrayBuffer(4);\nvar testView = new DataView(buffer);\ntestView.setInt16(0, msg.payload[2], true); \ntestView.setInt16(2, msg.payload[3], true); \nvar combBuff = Buffer.from(buffer);\nvar dataView = new DataView(new ArrayBuffer(4));\nfor (ib = 0; ib < 4; ++ib) dataView.setUint8(ib, combBuff[3 - ib]);\ndevice.eonCount.value = dataView.getUint32(0);\n\nvar lastEonCount = global.get('lastEonCount');\nif (lastEonCount == undefined) lastEonCount = -1;\nif ((lastEonCount < 0) || (lastEonCount > device.eonCount.value) ) lastEonCount = device.eonCount.value;\ndevice.hourEnergy.value = (device.eonCount.value - lastEonCount) / 1000;\nglobal.set('lastEonCount',device.eonCount.value);\n\ndevice.ehourCost.value = global.get('eprice') * device.hourEnergy.value;\nvar now = new Date(msg.timeStamp);\nnow.setMilliseconds(0);\nnow.setSeconds(0);\n//now.setMinutes(0);\ndevice.countTimeStamp.value = now.getTime();\ndevice.timeStamp = device.countTimeStamp.value;\nif (now.getMinutes() == 0) device.archiveNow = 1;\nnode.warn(device.eonCount.value.toString() + ' ' + device.hourEnergy.value.toString() + ' ' + device.ehourCost.value.toFixed(6) + ' ' + device.vbat.value.toString());\n\nreturn  [{topic:'newSettingDone', payload:true},null];\n",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -690,7 +690,7 @@
         "type": "function",
         "z": "e17c93fc0f5cec42",
         "name": "Init cube",
-        "func": "var device = global.get('device');\nvar msgs = [];\nmsgs[0] = {\"address\":0,\"value\":0};\n//must be the last!\nmsgs[1] = {\"address\":-1,\"value\":0};\nreturn {topic : 'initCube', payload: msgs};\n",
+        "func": "var device = global.get('device');\nvar cubeInit = global.get('cubeInit');\nif (cubeInit == 1) device.eonCount.value = 0;\n\nvar buffer = new ArrayBuffer(4);\nvar settingsView = new DataView(buffer);\nsettingsView.setUint32(0, device.eonCount.value, true); \nvar da = Buffer.from(buffer);\n\nvar dataView     = new DataView(new ArrayBuffer(2));\nfor (ib = 0; ib < 2; ++ib)   dataView.setUint8(ib, da[1 - ib]);\nvar int1 = dataView.getInt16(0);\nfor (ib = 0; ib < 2; ++ib)   dataView.setUint8(ib, da[3 - ib]);\nvar int2 = dataView.getInt16(0);\n\nvar msgs = [];\nmsgs[0] = {\"address\":0,\"value\":0};\nmsgs[1] = {\"address\":2,\"value\":int1};\nmsgs[2] = {\"address\":3,\"value\":int2};\n//must be the last!\nmsgs[3] = {\"address\":-1,\"value\":0};\nreturn {topic : 'initCube', payload: msgs};\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1033,7 +1033,7 @@
             }
         ],
         "repeat": "",
-        "crontab": "0 0-23 * * *",
+        "crontab": "*/5 0-23 * * *",
         "once": false,
         "onceDelay": "8",
         "topic": "readTable",
@@ -1227,7 +1227,7 @@
         "type": "function",
         "z": "16343784c71a3679",
         "name": "Read BlinkyBus",
-        "func": "if (global.get('device').settingInProgress != 0) return null;\nif (global.get('cubeInit') != 0) return null;\nreturn {topic: \"readStatus\", payload:true};\n",
+        "func": "if (global.get('device').settingInProgress != 0) return null;\nif (global.get('cubeInit') != 0) return null;\nreturn {topic: \"readStatus\", payload:true, timeStamp:msg.payload};\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1823,25 +1823,6 @@
         "wires": []
     },
     {
-        "id": "3e7eb8a39741a94e",
-        "type": "function",
-        "z": "16343784c71a3679",
-        "name": "Set input filename",
-        "func": "var deviceProps = global.get('deviceProps');\nreturn {topic: 'readFile', 'filename':deviceProps.configFile};",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 1030,
-        "y": 700,
-        "wires": [
-            [
-                "065d505d10fa535f"
-            ]
-        ]
-    },
-    {
         "id": "7d3632bf6e417fd5",
         "type": "link in",
         "z": "16343784c71a3679",
@@ -1849,11 +1830,11 @@
         "links": [
             "065d505d10fa535f"
         ],
-        "x": 355,
+        "x": 975,
         "y": 100,
         "wires": [
             [
-                "a53943973c168ecc"
+                "00a0aaa4f51b0138"
             ]
         ]
     },
@@ -1991,7 +1972,7 @@
         "type": "function",
         "z": "16343784c71a3679",
         "name": "Get Reading",
-        "func": "var bufsize = 4;\nvar buffer = new ArrayBuffer(bufsize);\nvar settingsView = new DataView(buffer);\nsettingsView.setUint8(0, 0, true); //setting\nsettingsView.setUint8(1, 0, true); //address\nsettingsView.setInt16(2, 0, true); //value\n\nreturn {topic:'reading',payload:Buffer.from(buffer)};\n",
+        "func": "var bufsize = 4;\nvar buffer = new ArrayBuffer(bufsize);\nvar settingsView = new DataView(buffer);\nsettingsView.setUint8(0, 0, true); //setting\nsettingsView.setUint8(1, 0, true); //address\nsettingsView.setInt16(2, 0, true); //value\n\nreturn {topic:'reading',payload:Buffer.from(buffer),timeStamp:msg.timeStamp};\n",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2010,7 +1991,7 @@
         "type": "function",
         "z": "16343784c71a3679",
         "name": "Check Reading",
-        "func": "var serialBufSize = global.get('serialBufSize');\nvar dataView     = new DataView(new ArrayBuffer(2));\nvar dataBuffer = [];\nfor (var ii = 0; ii < (msg.payload.length / 2); ++ii)\n{\n    for (ib = 0; ib < 2; ++ib)   dataView.setUint8(ib, msg.payload[(ii * 2) + 1 - ib]);\n    dataBuffer.push( dataView.getInt16(0));\n}\nreturn {topic:msg.topic,payload:dataBuffer};",
+        "func": "var serialBufSize = global.get('serialBufSize');\nvar dataView     = new DataView(new ArrayBuffer(2));\nvar dataBuffer = [];\nfor (var ii = 0; ii < (msg.payload.length / 2); ++ii)\n{\n    for (ib = 0; ib < 2; ++ib)   dataView.setUint8(ib, msg.payload[(ii * 2) + 1 - ib]);\n    dataBuffer.push( dataView.getInt16(0));\n}\nreturn {topic:msg.topic,payload:dataBuffer, timeStamp:msg.timeStamp};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2736,6 +2717,25 @@
         "wires": [
             [
                 "f3b00bbf2f5e3f78"
+            ]
+        ]
+    },
+    {
+        "id": "3e7eb8a39741a94e",
+        "type": "function",
+        "z": "16343784c71a3679",
+        "name": "Set cube Init flag",
+        "func": "global.set('cubeInit', 2);\nreturn {topic: 'initCube', payload:true};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1030,
+        "y": 700,
+        "wires": [
+            [
+                "065d505d10fa535f"
             ]
         ]
     },
