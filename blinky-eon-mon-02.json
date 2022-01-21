@@ -46,6 +46,26 @@
       }
     }
   },
+  "power": {
+    "action": "reading",
+    "type": "scalar",
+    "value": 0,
+    "unit": "unit",
+    "alarm": {
+      "value": 0,
+      "limits": {
+        "lolo": 10,
+        "low": 100,
+        "high": 10000,
+        "hihi": 15000
+      },
+      "notify": {
+        "name": "",
+        "number": "",
+        "time": 0
+      }
+    }
+  },
   "eonCount": {
     "action": "reading",
     "type": "scalar",
