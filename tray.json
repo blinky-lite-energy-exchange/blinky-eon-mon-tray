@@ -2,14 +2,14 @@
   "type": "blinky-eon-mon",
   "name": "01",
   "arcPeriod": 7200000,
-  "timeStamp": 1657697640000,
+  "timeStamp": 1659241200000,
   "power": {
     "action": "reading",
     "type": "scalar",
-    "value": 0,
+    "value": 1572864,
     "unit": "unit",
     "alarm": {
-      "value": 3,
+      "value": 4,
       "limits": {
         "lolo": 10,
         "low": 100,
@@ -26,7 +26,7 @@
   "eonCount": {
     "action": "reading",
     "type": "scalar",
-    "value": 0,
+    "value": 281760,
     "unit": "unit",
     "alarm": {
       "value": 0,
@@ -46,7 +46,7 @@
   "countTimeStamp": {
     "action": "reading",
     "type": "scalar",
-    "value": 1657695600000,
+    "value": 1659240000000,
     "unit": "unit",
     "alarm": {
       "value": 0,
@@ -66,7 +66,7 @@
   "ehourCost": {
     "action": "reading",
     "type": "scalar",
-    "value": 0,
+    "value": 0.359,
     "unit": "SEK",
     "alarm": {
       "value": 0,
@@ -86,7 +86,7 @@
   "hourEnergy": {
     "action": "reading",
     "type": "scalar",
-    "value": 0,
+    "value": 0.171,
     "unit": "kwH",
     "alarm": {
       "value": 0,
@@ -106,7 +106,7 @@
   "vbat": {
     "action": "reading",
     "type": "scalar",
-    "value": 5.03,
+    "value": 4.85,
     "unit": "Volts",
     "alarm": {
       "value": 0,
