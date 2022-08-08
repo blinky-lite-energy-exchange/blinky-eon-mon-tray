@@ -2,14 +2,15 @@
   "type": "blinky-eon-mon",
   "name": "01",
   "arcPeriod": 7200000,
-  "timeStamp": 1659896641921,
+  "timeStamp": 1659939534466,
+  "meterTimeStamp": 1659939530000,
   "power": {
     "action": "reading",
     "type": "scalar",
-    "value": 1572864,
-    "unit": "Watts",
+    "value": 0,
+    "unit": "kW",
     "alarm": {
-      "value": 4,
+      "value": 3,
       "limits": {
         "lolo": 10,
         "low": 100,
@@ -23,11 +24,11 @@
       }
     }
   },
-  "eonCount": {
+  "meterReading": {
     "action": "reading",
     "type": "scalar",
-    "value": 281760,
-    "unit": "kWh",
+    "value": 69453,
+    "unit": "Wh",
     "alarm": {
       "value": 0,
       "limits": {
@@ -43,18 +44,18 @@
       }
     }
   },
-  "countTimeStamp": {
-    "action": "reading",
+  "fixEnergyRate": {
+    "action": "setting",
     "type": "scalar",
-    "value": 1659240000000,
-    "unit": "unit",
+    "value": 0.6925,
+    "unit": "SEK/kWh",
     "alarm": {
       "value": 0,
       "limits": {
-        "lolo": -2,
-        "low": -1,
-        "high": 2000000000000,
-        "hihi": 2000000000000
+        "lolo": 0,
+        "low": 0,
+        "high": 1,
+        "hihi": 2
       },
       "notify": {
         "name": "",
@@ -63,18 +64,18 @@
       }
     }
   },
-  "ehourCost": {
-    "action": "reading",
+  "taxRate": {
+    "action": "setting",
     "type": "scalar",
-    "value": 0.359,
-    "unit": "SEK",
+    "value": 25,
+    "unit": "%",
     "alarm": {
       "value": 0,
       "limits": {
-        "lolo": -2,
-        "low": -1,
-        "high": 10,
-        "hihi": 10
+        "lolo": 0,
+        "low": 15,
+        "high": 30,
+        "hihi": 35
       },
       "notify": {
         "name": "",
@@ -83,18 +84,18 @@
       }
     }
   },
-  "hourEnergy": {
-    "action": "reading",
+  "priceArea": {
+    "action": "setting",
     "type": "scalar",
-    "value": 0.171,
-    "unit": "kwH",
+    "value": 4,
+    "unit": "",
     "alarm": {
       "value": 0,
       "limits": {
-        "lolo": -2,
-        "low": -1,
-        "high": 200,
-        "hihi": 200
+        "lolo": -1,
+        "low": 0,
+        "high": 5,
+        "hihi": 6
       },
       "notify": {
         "name": "",

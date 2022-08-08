@@ -532,7 +532,7 @@
                 "vt": "str"
             }
         ],
-        "repeat": "4",
+        "repeat": "3",
         "crontab": "",
         "once": true,
         "onceDelay": "8",
@@ -1654,10 +1654,10 @@
         "z": "ced4605f7f43ccc7",
         "g": "2d343c91aee43564",
         "name": "Create Readings",
-        "func": "let tray = global.get('tray');\nlet timeStamp = new Date(0);\ntimeStamp.setUTCFullYear(msg.payload[1] + 2000);\ntimeStamp.setUTCMonth(msg.payload[2]  - 1);\ntimeStamp.setUTCDate(msg.payload[3]);\ntimeStamp.setUTCHours(msg.payload[4]);\ntimeStamp.setUTCMinutes(msg.payload[5]);\ntimeStamp.setUTCSeconds(msg.payload[6]);\ntimeStamp.setTime(timeStamp.getTime() -3600000);\nlet energy = msg.payload[10];\nenergy = energy + 1000 * msg.payload[9];\nenergy = energy + 1000 * 1000 * msg.payload[8];\nenergy = energy + 1000 * 1000 * 1000* msg.payload[7];\nnode.warn(timeStamp.toString());\nnode.warn(energy);\nlet archiveMessage = null\nreturn  [{topic:msg.topic, payload:false}, archiveMessage];\n",
+        "func": "let tray = global.get('tray');\nlet timeStamp = new Date(0);\ntimeStamp.setUTCFullYear(msg.payload[1] + 2000);\ntimeStamp.setUTCMonth(msg.payload[2]  - 1);\ntimeStamp.setUTCDate(msg.payload[3]);\ntimeStamp.setUTCHours(msg.payload[4]);\ntimeStamp.setUTCMinutes(msg.payload[5]);\ntimeStamp.setUTCSeconds(msg.payload[6]);\ntimeStamp.setTime(timeStamp.getTime() -3600000);\nlet energy = msg.payload[10];\nenergy = energy + 1000 * msg.payload[9];\nenergy = energy + 1000 * 1000 * msg.payload[8];\nenergy = energy + 1000 * 1000 * 1000* msg.payload[7];\n\nlet energyReading = {timeStamp:timeStamp.getTime(),energy:energy};\nlet power = 0;\nlet energyReadingArray = context.get('energyReadingArray');\nif (energyReadingArray.length < 1)\n{\n    energyReadingArray.push(energyReading);\n}\nelse\n{\n    if (energyReading.timeStamp > energyReadingArray[energyReadingArray.length - 1].timeStamp)\n    {\n        energyReadingArray.push(energyReading);\n        if ((energyReading.timeStamp - energyReadingArray[0].timeStamp) > 600000)\n        {\n            energyReadingArray.shift();\n        }\n    }\n    let deltaE = energyReading.energy - energyReadingArray[0].energy;\n    let deltaT = (energyReading.timeStamp - energyReadingArray[0].timeStamp) / 3600000;\n    power = Math.round(deltaE / deltaT) / 1000; //in kW\n}\ntray.meterTimeStamp = timeStamp.getTime();\ntray.power.value = power;\ntray.meterReading.value = energy;\nlet archiveMessage = null\nlastArchiveTimeStamp = context.get('lastArchiveTimeStamp');\nif (msg.payload[5] == 0)\n{\n    if ((timeStamp.getTime() - lastArchiveTimeStamp) > 120000)\n    {\n        archiveMessage = {topic:'archiveNow', payload:true};\n        context.set('lastArchiveTimeStamp',timeStamp.getTime());\n    }\n}\n\nreturn  [{topic:msg.topic, payload:true}, archiveMessage];\n",
         "outputs": 2,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\ncontext.set('energyReadingArray',[]);\ncontext.set('lastArchiveTimeStamp',-1);",
         "finalize": "",
         "libs": [],
         "x": 690,
@@ -1694,159 +1694,6 @@
             ],
             [
                 "fd4378376976106f"
-            ]
-        ]
-    },
-    {
-        "id": "11904a9db5c2e1cf",
-        "type": "inject",
-        "z": "ced4605f7f43ccc7",
-        "name": "Every hour",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "0 0-23 * * *",
-        "once": false,
-        "onceDelay": "10",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 150,
-        "y": 1600,
-        "wires": [
-            [
-                "db05920e3d5475c3"
-            ]
-        ]
-    },
-    {
-        "id": "db05920e3d5475c3",
-        "type": "delay",
-        "z": "ced4605f7f43ccc7",
-        "name": "",
-        "pauseType": "delay",
-        "timeout": "10",
-        "timeoutUnits": "minutes",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 310,
-        "y": 1600,
-        "wires": [
-            [
-                "3df726808bf671cf"
-            ]
-        ]
-    },
-    {
-        "id": "4c72e938d14604b6",
-        "type": "inject",
-        "z": "ced4605f7f43ccc7",
-        "name": "Init+5sec",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": "5",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 140,
-        "y": 1540,
-        "wires": [
-            [
-                "3df726808bf671cf"
-            ]
-        ]
-    },
-    {
-        "id": "844a30c3a9c579e5",
-        "type": "json",
-        "z": "ced4605f7f43ccc7",
-        "name": "",
-        "property": "payload",
-        "action": "obj",
-        "pretty": false,
-        "x": 330,
-        "y": 1700,
-        "wires": [
-            [
-                "2911fdab6d26e9bf"
-            ]
-        ]
-    },
-    {
-        "id": "2911fdab6d26e9bf",
-        "type": "function",
-        "z": "ced4605f7f43ccc7",
-        "name": "Save espotPrice",
-        "func": "global.set('eprice',msg.payload.price.value);\nreturn msg;",
-        "outputs": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 480,
-        "y": 1700,
-        "wires": []
-    },
-    {
-        "id": "3df726808bf671cf",
-        "type": "mqtt out",
-        "z": "ced4605f7f43ccc7",
-        "name": "Spot Price Ping",
-        "topic": "$(SPOTPRICEPING)",
-        "qos": "0",
-        "retain": "false",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "cf9f84d0.6fba78",
-        "x": 480,
-        "y": 1540,
-        "wires": []
-    },
-    {
-        "id": "b2d52983a97be0ad",
-        "type": "mqtt in",
-        "z": "ced4605f7f43ccc7",
-        "name": "Spot Price Reading",
-        "topic": "$(SPOTPRICEREADING)",
-        "qos": "0",
-        "datatype": "auto",
-        "broker": "cf9f84d0.6fba78",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 160,
-        "y": 1700,
-        "wires": [
-            [
-                "844a30c3a9c579e5"
             ]
         ]
     }
