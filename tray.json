@@ -2,20 +2,20 @@
   "type": "blinky-eon-mon",
   "name": "01",
   "arcPeriod": 7200000,
-  "timeStamp": 1659944740000,
-  "meterTimeStamp": 1659944740000,
+  "timeStamp": 1660824290000,
+  "meterTimeStamp": 1660824290000,
   "power": {
     "action": "reading",
     "type": "scalar",
-    "value": 0,
+    "value": 0.162,
     "unit": "kW",
     "alarm": {
-      "value": 3,
+      "value": 1,
       "limits": {
-        "lolo": 10,
-        "low": 100,
-        "high": 10000,
-        "hihi": 15000
+        "lolo": 0,
+        "low": 2,
+        "high": 4,
+        "hihi": 6
       },
       "notify": {
         "name": "",
@@ -27,7 +27,7 @@
   "meterReading": {
     "action": "reading",
     "type": "scalar",
-    "value": 70557,
+    "value": 163022,
     "unit": "Wh",
     "alarm": {
       "value": 0,

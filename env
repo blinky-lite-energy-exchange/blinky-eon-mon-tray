@@ -1,0 +1,9 @@
+MQTTSUBSCRIBE=blinky-lite-v4/blinky-eon-mon/01/setting/#
+MQTTCLIENTID=blinky-eon-mon-tray-01
+MQTTSERVERIP=aaaa
+MQTTUSERNAME=bbbb
+MQTTPASSWORD=cccc
+SERIALPORT=/dev/rfcomm1
+SERIALBUFSIZE=22
+PM2NAME=1881-eon-mon-01
+NODEREDCONFIGSECRET=dddd
